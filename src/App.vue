@@ -6,4 +6,9 @@
 export default {};
 </script>
 
-<style></style>
+<style>
+#app {
+  max-width: 1440px;
+  margin: auto;
+}
+</style>
