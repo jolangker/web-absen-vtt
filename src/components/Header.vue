@@ -11,20 +11,10 @@
 
 <script>
 export default {
-  setup() {
-    const student = {
-      nisn: 8888526148,
-      full_name: "Joe Adams",
-      gender: "Laki - Laki",
-      grade: "XII",
-      major: "SIJA",
-      address: "Tebet, Jakarta Selatan",
-    };
-
-    return {
-      student,
-    };
+  props: {
+    student: Object,
   },
+  setup() {},
 };
 </script>
 
