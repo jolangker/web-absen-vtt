@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn__login {
+    @apply py-3 rounded text-white text-lg font-medium bg-blue-400 hover:bg-blue-700 focus:bg-blue-700 focus:outline-none duration-300;
+  }
+  .login__form {
+    @apply py-3 px-6 rounded font-medium ring-2 ring-blue-400 focus:outline-none focus:ring-blue-700;
+  }
+  .error__message {
+    @apply mt-2 text-xs font-semibold italic text-red-500;
+  }
+}
