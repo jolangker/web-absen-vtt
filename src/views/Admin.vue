@@ -14,6 +14,7 @@
         <template v-slot:title> Siswa Yang Belum Absen </template>
         <template v-slot:value> 3 </template>
       </attendance-info>
+      <logout class="bg-blue-500" />
     </div>
   </main>
 </template>
@@ -21,8 +22,9 @@
 <script>
 import AttendanceInfo from "../components/AttendanceInfo.vue";
 import DateTime from "../components/DateTime.vue";
+import Logout from "../components/Logout.vue";
 export default {
-  components: { AttendanceInfo, DateTime },
+  components: { AttendanceInfo, DateTime, Logout },
 };
 </script>
 
