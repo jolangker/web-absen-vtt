@@ -6,8 +6,8 @@
       rounded-lg
       flex flex-col
       items-center
-      py-10
-      border-l-8 border-blue-700
+      py-32
+      border-t-8 border-blue-700
     "
   >
     <date-time />

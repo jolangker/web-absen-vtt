@@ -1,9 +1,9 @@
 <template>
   <div class="text-center text-blue-400">
-    <h2 class="font-orbitron font-medium text-6xl">
+    <h2 class="font-orbitron font-medium text-8xl">
       {{ time }}
     </h2>
-    <p class="mt-3 font-semibold text-xl">{{ date }}</p>
+    <p class="mt-3 font-semibold text-2xl">{{ date }}</p>
   </div>
 </template>
 
