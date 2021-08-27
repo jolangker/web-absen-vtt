@@ -23,6 +23,7 @@ export default {
     const router = useRouter();
 
     const logOut = () => {
+      sessionStorage.clear();
       router.push({ name: "Login" });
     };
 

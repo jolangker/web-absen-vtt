@@ -42,8 +42,11 @@ import { useRouter } from "vue-router";
 export default {
   setup() {
     const router = useRouter();
+    const url = "https://absenvtt.herokuapp.com/api/Siswa/?format=json";
+    const cors = "https://cors-anywhere.herokuapp.com/";
     const username = ref("");
     const password = ref("");
+    const admin = ref([]);
 
     const loginValidation = () => {
       if (!username.value) {
@@ -62,16 +65,37 @@ export default {
       }
     };
 
-    const login = () => {
+    const login = async () => {
       if (!username.value || !password.value) return loginValidation();
 
       const btnLogin = document.querySelector(".btn__login");
+      btnLogin.setAttribute("disabled", true);
       btnLogin.textContent = "Please Wait ...";
       btnLogin.classList.add("cursor-not-allowed", "opacity-50");
 
-      setTimeout(() => {
+      const res = await fetch(`${cors}${url}`);
+
+      try {
+        if (!res.ok) throw res.statusText;
+        const data = await res.json();
+
+        admin.value = data.filter((adm) => {
+          return (
+            adm.username.includes(username.value) &&
+            adm.username.includes(username.value)
+          );
+        });
+
+        if (!admin.value.length) throw "Username/Password Salah";
+
+        sessionStorage.setItem("username", username.value);
         router.push({ name: "Admin" });
-      }, 3000);
+      } catch (err) {
+        alert(err);
+        btnLogin.removeAttribute("disabled");
+        btnLogin.textContent = "Login";
+        btnLogin.classList.remove("cursor-not-allowed", "opacity-50");
+      }
     };
 
     return {

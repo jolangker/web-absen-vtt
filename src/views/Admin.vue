@@ -20,11 +20,22 @@
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import AttendanceInfo from "../components/AttendanceInfo.vue";
 import DateTime from "../components/DateTime.vue";
 import Logout from "../components/Logout.vue";
 export default {
   components: { AttendanceInfo, DateTime, Logout },
+  setup() {
+    const username = sessionStorage.getItem("username");
+    const router = useRouter();
+
+    const validation = () => {
+      if (!username) return router.push({ name: "Login" });
+    };
+
+    window.onload = validation();
+  },
 };
 </script>
 

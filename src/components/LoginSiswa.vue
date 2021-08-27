@@ -29,24 +29,44 @@ export default {
   setup() {
     const getNisn = ref("");
     const router = useRouter();
+    const url = "https://absenvtt.herokuapp.com/api/Siswa/?format=json";
+    const cors = "https://cors-anywhere.herokuapp.com/";
+    const user = ref([]);
 
-    const loginValidation = () => {
+    const formValidation = () => {
       const errMsg = document.querySelector(".error__message");
       const loginForm = document.querySelector(".login__form");
       errMsg.classList.remove("hidden");
       loginForm.classList.add("ring-red-400");
     };
 
-    const login = () => {
-      if (!getNisn.value) return loginValidation();
+    const login = async () => {
+      if (!getNisn.value) return formValidation();
 
       const btnLogin = document.querySelector(".btn__login");
+      btnLogin.setAttribute("disabled", true);
       btnLogin.textContent = "Please Wait ...";
       btnLogin.classList.add("cursor-not-allowed", "opacity-50");
 
-      setTimeout(() => {
+      const res = await fetch(`${cors}${url}`);
+
+      try {
+        if (!res.ok) throw res.statusText;
+        const data = await res.json();
+
+        user.value = data.filter((nisn) => {
+          return nisn.nisn.includes(getNisn.value);
+        });
+
+        if (!user.value.length) throw "NISN Tidak Ditemukan";
+        sessionStorage.setItem("nisn", user.value[0].nisn);
         router.push({ name: "Home" });
-      }, 3000);
+      } catch (err) {
+        alert(err);
+        btnLogin.removeAttribute("disabled");
+        btnLogin.textContent = "Login";
+        btnLogin.classList.remove("cursor-not-allowed", "opacity-50");
+      }
     };
 
     return {
