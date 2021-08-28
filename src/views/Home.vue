@@ -5,6 +5,9 @@
       <Absence />
     </main>
   </div>
+  <div v-else>
+    <Loading />
+  </div>
 </template>
 
 <script>
@@ -12,25 +15,29 @@ import Header from "../components/Header.vue";
 import Absence from "../components/Absence.vue";
 import Loading from "../components/Loading.vue";
 import { useRouter } from "vue-router";
-import { reactive, ref } from "@vue/reactivity";
+import { ref } from "@vue/reactivity";
+import getVariables from "../composables/getVariables";
 export default {
   components: { Header, Absence, Loading },
   setup() {
     const nisn = sessionStorage.getItem("nisn");
     const router = useRouter();
-    const url = `https://absenvtt.herokuapp.com/api/Siswa/${nisn}?format=json`;
-    const cors = "https://cors-anywhere.herokuapp.com/";
+    const { urlNisn, cors, retToken } = getVariables(nisn);
     const student = ref({});
 
     const fetchData = async () => {
-      const res = await fetch(`${cors}${url}`);
+      const res = await fetch(`${cors}${urlNisn}`, {
+        headers: {
+          Authorization: `Bearer ${retToken}`,
+        },
+      });
       try {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
         student.value = data;
       } catch (err) {
         alert(err);
-        // router.push({ name: "Login" });
+        router.push({ name: "Login" });
       }
     };
 

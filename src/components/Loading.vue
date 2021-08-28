@@ -1,5 +1,7 @@
 <template>
-  <div class="mt-8 text-center text-4xl font-medium">Loading ...</div>
+  <div class="absolute inset-0 flex justify-center items-center">
+    <h2 class="text-5xl font-medium">Loading ...</h2>
+  </div>
 </template>
 
 <script>

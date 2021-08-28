@@ -25,13 +25,14 @@
 <script>
 import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
+import getVariables from "../composables/getVariables";
+import getToken from "../composables/getToken";
 export default {
   setup() {
     const getNisn = ref("");
     const router = useRouter();
-    const url = "https://absenvtt.herokuapp.com/api/Siswa/?format=json";
-    const cors = "https://cors-anywhere.herokuapp.com/";
     const user = ref([]);
+    const { urlSiswa, cors } = getVariables();
 
     const formValidation = () => {
       const errMsg = document.querySelector(".error__message");
@@ -48,7 +49,16 @@ export default {
       btnLogin.textContent = "Please Wait ...";
       btnLogin.classList.add("cursor-not-allowed", "opacity-50");
 
-      const res = await fetch(`${cors}${url}`);
+      const token = await getToken();
+      await sessionStorage.setItem("token", token.access);
+
+      const res = await fetch(`${cors}${urlSiswa}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token.access}`,
+        },
+      });
 
       try {
         if (!res.ok) throw res.statusText;

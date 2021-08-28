@@ -3,7 +3,10 @@
 </template>
 
 <script>
-export default {};
+import { ref } from "@vue/reactivity";
+export default {
+  setup() {},
+};
 </script>
 
 <style>

@@ -29,9 +29,17 @@ export default {
   setup() {
     const username = sessionStorage.getItem("username");
     const router = useRouter();
+    const url = "https://absenvtt.herokuapp.com/api/Siswa/?format=json";
+    const cors = "https://cors-anywhere.herokuapp.com/";
+
+    const fetchData = async () => {
+      const res = await fetch(`${cors}${url}`);
+      const data = await res.json();
+    };
 
     const validation = () => {
       if (!username) return router.push({ name: "Login" });
+      fetchData();
     };
 
     window.onload = validation();
