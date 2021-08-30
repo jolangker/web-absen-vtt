@@ -34,6 +34,8 @@ export default {
       admin.value = !admin.value;
     };
 
+    window.onload = sessionStorage.clear();
+
     return {
       admin,
       changeLevel,
