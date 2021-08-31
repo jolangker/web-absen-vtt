@@ -1,33 +1,22 @@
 <template>
-  <main class="px-16 py-6">
-    <date-time />
-    <div class="mt-5 flex flex-col space-y-8">
-      <attendance-info>
-        <template v-slot:title> Jumlah Siswa </template>
-        <template v-slot:value> {{ jumlahSiswa }} </template>
-      </attendance-info>
-      <attendance-info>
-        <template v-slot:title> Siswa Yang Sudah Absen </template>
-        <template v-slot:value> {{ jumlahAbsen }} </template>
-      </attendance-info>
-      <attendance-info>
-        <template v-slot:title> Siswa Yang Belum Absen </template>
-        <template v-slot:value> {{ jumlahTidakAbsen }} </template>
-      </attendance-info>
-      <Logout class="bg-blue-500" @click="logOut" />
-    </div>
-  </main>
+  <div class="flex">
+    <Sidebar />
+    <main class="px-16 py-6 flex-grow">
+      <date-time />
+    </main>
+  </div>
 </template>
 
 <script>
 import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import AttendanceInfo from "../components/AttendanceInfo.vue";
+import Sidebar from "../components/Sidebar.vue";
 import DateTime from "../components/DateTime.vue";
 import Logout from "../components/Logout.vue";
 import getVariables from "../composables/getVariables";
 export default {
-  components: { AttendanceInfo, DateTime, Logout },
+  components: { AttendanceInfo, DateTime, Logout, Sidebar },
   setup() {
     const router = useRouter();
     const username = sessionStorage.getItem("username");
@@ -48,7 +37,7 @@ export default {
         jumlahSiswa.value = data.length;
       } catch (err) {
         alert(err);
-        router.push({ name: "Login" });
+        router.push({ name: "Admin" });
       }
     };
 
@@ -82,7 +71,7 @@ export default {
       router.push({ name: "Admin" });
     };
 
-    window.onload = validation();
+    // window.onload = validation();
 
     return {
       jumlahSiswa,

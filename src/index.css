@@ -12,4 +12,19 @@
   .error__message {
     @apply mt-2 text-xs font-semibold italic text-red-500;
   }
+  .sidebar {
+    @apply flex flex-col text-white;
+  }
+  .sidebar__menu {
+    @apply duration-300 hover:bg-blue-800;
+  }
+  .sidebar__link {
+    @apply flex items-center  py-4 px-8;
+  }
+  .sidebar__icon {
+    @apply w-8 text-lg;
+  }
+  .sidebar__text {
+    @apply ml-2 font-medium;
+  }
 }
