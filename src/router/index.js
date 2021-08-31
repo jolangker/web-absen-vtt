@@ -31,6 +31,7 @@ const routes = [
         path: "siswa/edit/:id",
         name: "Admin.Siswa.Edit",
         component: () => import("../views/admin/siswa/Edit.vue"),
+        props: true,
       },
       {
         path: "siswa/delete/:id",

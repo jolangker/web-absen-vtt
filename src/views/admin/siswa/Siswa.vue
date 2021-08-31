@@ -69,7 +69,7 @@ export default {
       students.value = data;
     };
 
-    fetchData();
+    // fetchData();
 
     return {
       students,
