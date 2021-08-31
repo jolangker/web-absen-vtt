@@ -100,6 +100,10 @@ export default {
 
         sessionStorage.setItem("username", username.value);
         router.push({ name: "Admin" });
+
+        btnLogin.removeAttribute("disabled");
+        btnLogin.textContent = "Login";
+        btnLogin.classList.remove("cursor-not-allowed", "opacity-50");
       } catch (err) {
         alert(err);
         btnLogin.removeAttribute("disabled");

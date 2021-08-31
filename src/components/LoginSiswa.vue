@@ -71,6 +71,10 @@ export default {
         if (!user.value.length) throw "NISN Tidak Ditemukan";
         sessionStorage.setItem("nisn", user.value[0].nisn);
         router.push({ name: "Home" });
+
+        btnLogin.removeAttribute("disabled");
+        btnLogin.textContent = "Login";
+        btnLogin.classList.remove("cursor-not-allowed", "opacity-50");
       } catch (err) {
         alert(err);
         btnLogin.removeAttribute("disabled");
