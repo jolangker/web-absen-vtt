@@ -10,6 +10,8 @@
       shadow
       border-l-8 border-blue-700
       rounded
+      duration-300
+      hover:bg-gray-300
     "
   >
     <h2 class="text-2xl font-medium">
