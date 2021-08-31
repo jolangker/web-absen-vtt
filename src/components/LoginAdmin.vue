@@ -30,7 +30,6 @@
         </p>
 
         <button class="btn__login mt-3">LOGIN</button>
-        <slot></slot>
       </form>
     </div>
   </div>
@@ -99,7 +98,7 @@ export default {
         if (!admin.value.length) throw "Username/Password Salah";
 
         sessionStorage.setItem("username", username.value);
-        router.push({ name: "Admin" });
+        router.push({ name: "Dashboard" });
 
         btnLogin.removeAttribute("disabled");
         btnLogin.textContent = "Login";

@@ -9,7 +9,6 @@
       rounded
       hover:bg-blue-800
     "
-    @click="logOut"
   >
     <span class="mr-3">Logout</span>
     <i class="fas fa-sign-out-alt"></i>

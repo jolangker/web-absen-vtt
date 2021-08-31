@@ -61,7 +61,6 @@ export default {
       });
       id.value = getStudent.value[0].id;
       status.value = getStudent.value[0].status;
-      console.log(status.value);
     };
 
     fetchData();

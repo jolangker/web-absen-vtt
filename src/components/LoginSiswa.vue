@@ -16,7 +16,6 @@
           Harap Masukkan NISN Anda
         </p>
         <button class="btn__login mt-3">LOGIN</button>
-        <slot></slot>
       </form>
     </div>
   </div>
@@ -63,7 +62,6 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
-
         user.value = data.filter((nisn) => {
           return nisn.nisn.includes(getNisn.value);
         });

@@ -8,16 +8,27 @@
         NISN : {{ student.nisn }}
       </p>
     </div>
-    <Logout />
+    <Logout @click="logOut" />
   </header>
 </template>
 
 <script>
+import { useRouter } from "vue-router";
 import Logout from "./Logout.vue";
 export default {
   components: { Logout },
   props: {
     student: Object,
+  },
+  setup() {
+    const router = useRouter();
+    const logOut = () => {
+      router.push({ name: "Login" });
+    };
+
+    return {
+      logOut,
+    };
   },
 };
 </script>
