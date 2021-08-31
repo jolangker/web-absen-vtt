@@ -14,13 +14,41 @@ const routes = [
   {
     path: "/admin",
     name: "Admin",
-    component: () => import("../views/Admin.vue"),
+    redirect: "/admin/dashboard",
+    component: () => import("../views/admin/Admin.vue"),
+    children: [
+      {
+        path: "dashboard",
+        name: "Admin.Dashboard",
+        component: () => import("../views/admin/Dashboard.vue"),
+      },
+      {
+        path: "siswa",
+        name: "Admin.Siswa",
+        component: () => import("../views/admin/Siswa.vue"),
+      },
+      {
+        path: "kelas-jurusan",
+        name: "Admin.KJ",
+        component: () => import("../views/admin/KelasJurusan.vue"),
+      },
+      {
+        path: "absensi",
+        name: "Admin.Absensi",
+        component: () => import("../views/admin/Absensi.vue"),
+      },
+    ],
   },
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: () => import("../views/Dashboard.vue"),
+    path: "/admin/login",
+    name: "Admin.Login",
+    component: () => import("../views/admin/Login.vue"),
   },
+  // {
+  //   path: "/dashboard",
+  //   name: "Dashboard",
+  //   component: () => import("../views/Dashboard.vue"),
+  // },
 ];
 
 const router = createRouter({

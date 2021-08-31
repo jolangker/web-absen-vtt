@@ -1,8 +1,8 @@
 <template>
   <div class="flex">
     <Sidebar />
-    <main class="px-16 py-6 flex-grow">
-      <date-time />
+    <main class="px-10 py-6 flex-grow">
+      <router-view />
     </main>
   </div>
 </template>
@@ -10,11 +10,11 @@
 <script>
 import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
-import AttendanceInfo from "../components/AttendanceInfo.vue";
-import Sidebar from "../components/Sidebar.vue";
-import DateTime from "../components/DateTime.vue";
-import Logout from "../components/Logout.vue";
-import getVariables from "../composables/getVariables";
+import AttendanceInfo from "../../components/AttendanceInfo.vue";
+import Sidebar from "../../components/Sidebar.vue";
+import DateTime from "../../components/DateTime.vue";
+import Logout from "../../components/Logout.vue";
+import getVariables from "../../composables/getVariables";
 export default {
   components: { AttendanceInfo, DateTime, Logout, Sidebar },
   setup() {
@@ -56,12 +56,12 @@ export default {
         jumlahAbsen.value = filtered.length;
       } catch (err) {
         alert(err);
-        router.push({ name: "Login" });
+        router.push({ name: "Admin.Login" });
       }
     };
 
     const validation = async () => {
-      if (!username || !retToken) return router.push({ name: "Login" });
+      if (!username || !retToken) return router.push({ name: "Admin.Login" });
       await fetchSiswa();
       await fetchAbsensi();
       jumlahTidakAbsen.value = jumlahSiswa.value - jumlahAbsen.value;

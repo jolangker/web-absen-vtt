@@ -98,7 +98,7 @@ export default {
         if (!admin.value.length) throw "Username/Password Salah";
 
         sessionStorage.setItem("username", username.value);
-        router.push({ name: "Dashboard" });
+        router.push({ name: "Admin" });
 
         btnLogin.removeAttribute("disabled");
         btnLogin.textContent = "Login";

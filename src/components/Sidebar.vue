@@ -12,35 +12,35 @@
     </div>
     <ul class="sidebar flex-grow">
       <li class="sidebar__menu">
-        <a href="#" class="sidebar__link">
+        <router-link :to="{ name: 'Admin.Dashboard' }" class="sidebar__link">
           <span class="sidebar__icon"><i class="fas fa-home"></i></span>
           <span class="sidebar__text">Dashboard</span>
-        </a>
+        </router-link>
       </li>
       <li class="sidebar__menu">
-        <a href="#" class="sidebar__link">
+        <router-link :to="{ name: 'Admin.Siswa' }" class="sidebar__link">
           <span class="sidebar__icon"><i class="fas fa-users"></i></span>
           <span class="sidebar__text">Siswa</span>
-        </a>
+        </router-link>
       </li>
       <li class="sidebar__menu">
-        <a href="#" class="sidebar__link">
+        <router-link :to="{ name: 'Admin.KJ' }" class="sidebar__link">
           <span class="sidebar__icon"
             ><i class="fas fa-grip-horizontal"></i
           ></span>
           <span class="sidebar__text">Kelas & Jurusan</span>
-        </a>
+        </router-link>
       </li>
       <li class="sidebar__menu">
-        <a href="#" class="sidebar__link">
+        <router-link :to="{ name: 'Admin.Absensi' }" class="sidebar__link">
           <span class="sidebar__icon"
             ><i class="fas fa-calendar-check"></i
           ></span>
           <span class="sidebar__text">Absensi</span>
-        </a>
+        </router-link>
       </li>
       <li class="sidebar__menu mt-auto">
-        <button class="sidebar__link text-left w-full">
+        <button class="sidebar__link text-left w-full" @click="logOut">
           <span class="sidebar__icon">
             <i class="fas fa-sign-out-alt transform rotate-180"></i>
           </span>
@@ -52,7 +52,19 @@
 </template>
 
 <script>
-export default {};
+import { useRouter } from "vue-router";
+export default {
+  setup() {
+    const router = useRouter();
+    const logOut = () => {
+      router.push({ name: "Admin.Login" });
+    };
+
+    return {
+      logOut,
+    };
+  },
+};
 </script>
 
 <style></style>
