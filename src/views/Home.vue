@@ -42,7 +42,7 @@ export default {
     };
 
     const validation = () => {
-      if (!nisn) return router.push({ name: "Login" });
+      if (!nisn || !retToken) return router.push({ name: "Login" });
       fetchData();
     };
 
