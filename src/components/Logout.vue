@@ -2,7 +2,7 @@
   <button
     class="
       py-2
-      px-6
+      px-4
       text-lg text-white
       font-medium
       duration-300

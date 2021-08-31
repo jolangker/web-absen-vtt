@@ -6,7 +6,8 @@
       rounded-lg
       flex flex-col
       items-center
-      py-32
+      py-16
+      lg:py-32
       border-t-8 border-blue-700
     "
   >

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen bg-blue-400 flex justify-center items-center">
+  <div class="h-screen bg-blue-400 flex justify-center items-center px-8">
     <login-admin />
   </div>
 </template>
