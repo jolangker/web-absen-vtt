@@ -1,5 +1,5 @@
 <template>
-  <aside class="h-screen flex flex-col bg-blue-600">
+  <aside class="min-h-screen flex flex-col bg-blue-600">
     <div class="flex flex-col items-center p-4 border-b">
       <div class="border-2 p-10 relative rounded-full overflow-hidden">
         <img

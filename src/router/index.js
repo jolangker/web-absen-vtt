@@ -25,7 +25,17 @@ const routes = [
       {
         path: "siswa",
         name: "Admin.Siswa",
-        component: () => import("../views/admin/Siswa.vue"),
+        component: () => import("../views/admin/siswa/Siswa.vue"),
+      },
+      {
+        path: "siswa/edit/:id",
+        name: "Admin.Siswa.Edit",
+        component: () => import("../views/admin/siswa/Edit.vue"),
+      },
+      {
+        path: "siswa/delete/:id",
+        name: "Admin.Siswa.Delete",
+        component: () => import("../views/admin/siswa/Delete.vue"),
       },
       {
         path: "kelas-jurusan",
