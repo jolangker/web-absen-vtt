@@ -1,13 +1,11 @@
-const getVariables = (nisn) => {
-  const urlSiswa = "https://absenvttv2.herokuapp.com/api/siswa";
-  const urlNisn = "https://absenvttv2.herokuapp.com/api/siswa/" + nisn;
+const getVariables = () => {
+  const urlSiswa = "https://absenvttv2.herokuapp.com/api/siswa/";
   const urlAbsensi = "https://absenvttv2.herokuapp.com/api/absensi/";
   const cors = "https://cors-anywhere.herokuapp.com/";
   const retToken = sessionStorage.getItem("token");
 
   return {
     urlSiswa,
-    urlNisn,
     urlAbsensi,
     cors,
     retToken,

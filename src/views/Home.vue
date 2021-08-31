@@ -22,11 +22,11 @@ export default {
   setup() {
     const nisn = sessionStorage.getItem("nisn");
     const router = useRouter();
-    const { urlNisn, cors, retToken } = getVariables(nisn);
+    const { urlSiswa, cors, retToken } = getVariables();
     const student = ref({});
 
     const fetchData = async () => {
-      const res = await fetch(`${cors}${urlNisn}`, {
+      const res = await fetch(`${cors}${urlSiswa}${nisn}`, {
         headers: {
           Authorization: `Bearer ${retToken}`,
         },
