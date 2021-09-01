@@ -26,7 +26,7 @@ export default {
       router.push({ name: "Admin.Login" });
     };
 
-    // window.onload = validation();
+    window.onload = validation();
 
     return {
       logOut,

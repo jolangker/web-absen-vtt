@@ -45,6 +45,15 @@
   .btn__delete {
     @apply bg-red-500 py-1 px-4 rounded text-white font-medium border duration-300 hover:bg-gray-200 hover:text-red-500 hover:border-red-500;
   }
+  .crud {
+    @apply py-4 flex flex-col space-y-6;
+  }
+  .crud__wrapper {
+    @apply bg-white rounded shadow p-8;
+  }
+  .crud__header {
+    @apply text-2xl pb-2 font-medium border-b-2 border-blue-400;
+  }
   .crud__form {
     @apply mt-2 w-full py-3 px-6 ring-2 ring-gray-300 rounded font-medium focus:outline-none focus:ring-blue-400;
   }

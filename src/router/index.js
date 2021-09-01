@@ -34,9 +34,9 @@ const routes = [
         props: true,
       },
       {
-        path: "siswa/delete/:id",
-        name: "Admin.Siswa.Delete",
-        component: () => import("../views/admin/siswa/Delete.vue"),
+        path: "siswa/add",
+        name: "Admin.Siswa.Add",
+        component: () => import("../views/admin/siswa/Add.vue"),
       },
       {
         path: "kelas-jurusan",

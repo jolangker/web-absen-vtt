@@ -1,22 +1,21 @@
 <template>
   <div class="crud__wrapper">
-    <h2 class="crud__header">EDIT {{ student.name }}</h2>
-    <form class="crud" @submit.prevent="updateData">
+    <h2 class="crud__header">TAMBAH USER</h2>
+    <form class="crud" @submit.prevent="addData">
       <div>
         <label for="id_student" class="crud__label">ID</label>
         <input
           id="id_student"
-          type="text"
+          type="number"
           class="crud__form"
           v-model="nisn"
-          readonly
           required
         />
       </div>
       <div>
         <label for="name_student" class="crud__label">NAMA</label>
         <input
-          id="NAME_student"
+          id="name_student"
           type="text"
           class="crud__form"
           v-model="name"
@@ -37,7 +36,7 @@
         <label for="password_student" class="crud__label">PASSWORD</label>
         <input
           id="password_student"
-          type="text"
+          type="password"
           class="crud__form"
           v-model="password"
           required
@@ -51,7 +50,7 @@
           v-model="id_kelas"
           required
         >
-          <option disabled selected>Pilih Kelas</option>
+          <option disabled selected value="">Pilih Kelas</option>
           <option value="1">X</option>
           <option value="2">XI</option>
           <option value="3">XII</option>
@@ -66,7 +65,7 @@
           v-model="id_jurusan"
           required
         >
-          <option disabled selected>Pilih Jursan</option>
+          <option disabled selected value="">Pilih Jursan</option>
           <option value="1">KGSP</option>
           <option value="2">SIJA</option>
           <option value="3">TEDK</option>
@@ -77,8 +76,8 @@
       </div>
 
       <button type="submit" class="btn btn__green py-2 px-6">
-        <span class="mr-2">Update</span>
-        <i class="fas fa-check-circle"></i>
+        <i class="fas fa-user-plus"></i>
+        <span class="ml-3">Tambah User</span>
       </button>
     </form>
     <back-button />
@@ -87,56 +86,24 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import { useRouter } from "vue-router";
 import BackButton from "../../../components/BackButton.vue";
 import getVariables from "../../../composables/getVariables";
+import { useRouter } from "vue-router";
 export default {
-  props: ["id"],
   components: { BackButton },
-  setup(props) {
+  setup() {
     const { urlSiswa, cors, retToken } = getVariables();
     const router = useRouter();
-    const student = ref({});
-
     const nisn = ref("");
     const name = ref("");
     const username = ref("");
     const password = ref("");
-    const id_kelas = ref(0);
-    const id_jurusan = ref(0);
+    const id_kelas = ref("");
+    const id_jurusan = ref("");
 
-    const back = () => {
-      router.go(-1);
-    };
-
-    const fetchData = async () => {
-      const res = await fetch(`${cors}${urlSiswa}${props.id}`, {
-        headers: {
-          Authorization: `Bearer ${retToken}`,
-        },
-      });
-
-      try {
-        if (!res.ok) throw res.statusText;
-        const data = await res.json();
-        student.value = data;
-        nisn.value = student.value.nisn;
-        name.value = student.value.name;
-        username.value = student.value.username;
-        password.value = student.value.password;
-        id_kelas.value = student.value.id_kelas;
-        id_jurusan.value = student.value.id_jurusan;
-      } catch (err) {
-        alert(err);
-        router.push({ name: "Admin.Login" });
-      }
-    };
-
-    fetchData();
-
-    const updateData = async () => {
-      const res = await fetch(`${cors}${urlSiswa}${props.id}/`, {
-        method: "PATCH",
+    const addData = async () => {
+      const res = await fetch(`${cors}${urlSiswa}`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${retToken}`,
@@ -152,7 +119,7 @@ export default {
       });
       try {
         if (!res.ok) throw res.statusText;
-        alert("Update Berhasil");
+        alert("Siswa Berhasil Ditambahkan");
         router.push({ name: "Admin.Siswa" });
       } catch (err) {
         alert.err;
@@ -160,15 +127,13 @@ export default {
     };
 
     return {
-      student,
       nisn,
       name,
       username,
       password,
       id_kelas,
       id_jurusan,
-      back,
-      updateData,
+      addData,
     };
   },
 };
