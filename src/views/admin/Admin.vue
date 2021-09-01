@@ -35,4 +35,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.router-link-active {
+  background: #1e40af;
+}
+</style>
