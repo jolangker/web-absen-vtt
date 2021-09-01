@@ -25,7 +25,7 @@
           v-for="student in students"
           :key="student"
         >
-          <td class="py-3">{{ no }}</td>
+          <td class="py-3">{{ no++ }}</td>
           <td class="py-3">{{ student.nisn }}</td>
           <td class="py-3">{{ student.name }}</td>
           <td class="py-3">{{ student.id_kelas }}</td>
@@ -63,7 +63,7 @@ export default {
     const { urlSiswa, cors, retToken } = getVariables();
     const router = useRouter();
     const students = ref([]);
-    const no = ref(1);
+    const no = 1;
 
     const fetchData = async () => {
       const res = await fetch(`${cors}${urlSiswa}`, {
