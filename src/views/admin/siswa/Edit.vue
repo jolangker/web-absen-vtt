@@ -16,7 +16,7 @@
       <div>
         <label for="name_student" class="crud__label">NAMA</label>
         <input
-          id="NAME_student"
+          id="name_student"
           type="text"
           class="crud__form"
           v-model="name"

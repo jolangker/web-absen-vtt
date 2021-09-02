@@ -41,7 +41,20 @@ const routes = [
       {
         path: "kelas-jurusan",
         name: "Admin.KJ",
-        component: () => import("../views/admin/KelasJurusan.vue"),
+        component: () =>
+          import("../views/admin/kelas-jurusan/KelasJurusan.vue"),
+      },
+      {
+        path: "kelas-jurusan/edit/kelas/:id",
+        name: "Admin.KJ.Edit.Kelas",
+        component: () => import("../views/admin/kelas-jurusan/EditKelas.vue"),
+        props: true,
+      },
+      {
+        path: "kelas-jurusan/edit/jurusan/:id",
+        name: "Admin.KJ.Edit.Jurusan",
+        component: () => import("../views/admin/kelas-jurusan/EditJurusan.vue"),
+        props: true,
       },
       {
         path: "absensi",

@@ -32,13 +32,13 @@
           <td class="py-3">{{ student.id_jurusan }}</td>
           <td class="py-3 flex justify-center space-x-2">
             <router-link
-              class="btn__edit"
+              class="btn btn__green"
               :to="{ name: 'Admin.Siswa.Edit', params: { id: student.nisn } }"
             >
               <i class="fas fa-user-edit"></i>
               <span class="ml-3">Edit</span>
             </router-link>
-            <button class="btn__delete" @click="deleteData(student.nisn)">
+            <button class="btn btn__red" @click="deleteData(student.nisn)">
               <i class="fas fa-user-minus"></i>
               <span class="ml-3">Delete</span>
             </button>
