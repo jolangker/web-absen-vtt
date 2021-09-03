@@ -36,6 +36,21 @@ export default {
     const students = ref(0);
     const attend = ref(0);
     const notAttend = ref(0);
+    const daily = ref("");
+
+    const getDaily = () => {
+      const date = new Date();
+      let y = date.getFullYear();
+      let m = date.getMonth() + 1;
+      let d = date.getDate();
+
+      m = m < 10 ? "0" + m : m;
+      d = d < 10 ? "0" + d : d;
+
+      daily.value = `${y}-${m}-${d}`;
+    };
+
+    getDaily();
 
     const fetchSiswa = async () => {
       const res = await fetch(`${urlSiswa}`, {
@@ -44,7 +59,7 @@ export default {
         },
       });
       try {
-        if (!res.ok) throw new Error(res.statusText);
+        if (!res.ok) throw res.statusText;
         const data = await res.json();
         students.value = data.length;
       } catch (err) {
@@ -63,10 +78,10 @@ export default {
         if (!res.ok) throw new Error(res.statusText);
         const data = await res.json();
         attend.value = data.filter((atts) => {
-          return atts.status.toLocaleString().includes("true");
-        }).length;
-        notAttend.value = data.filter((atts) => {
-          return atts.status.toLocaleString().includes("false");
+          return (
+            atts.status.toLocaleString().includes("true") &&
+            atts.daily.includes(daily.value)
+          );
         }).length;
       } catch (err) {
         alert(err);
@@ -74,8 +89,9 @@ export default {
       }
     };
 
-    fetchSiswa();
-    fetchAbsensi();
+    fetchSiswa()
+      .then(() => fetchAbsensi())
+      .then(() => (notAttend.value = students.value - attend.value));
 
     return {
       students,
