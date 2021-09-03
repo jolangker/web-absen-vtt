@@ -32,7 +32,7 @@
                 params: { id: classs.id_kelas },
               }"
             >
-              <i class="fas fa-user-edit"></i>
+              <i class="fas fa-pen"></i>
               <span class="ml-3">Edit</span>
             </router-link>
           </td>
@@ -68,7 +68,7 @@
                 params: { id: major.id_jurusan },
               }"
             >
-              <i class="fas fa-user-edit"></i>
+              <i class="fas fa-pen"></i>
               <span class="ml-3">Edit</span>
             </router-link>
           </td>

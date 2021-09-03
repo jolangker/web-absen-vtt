@@ -1,4 +1,5 @@
 <template>
+  <!--  -->
   <div class="flex" v-if="session">
     <Sidebar />
     <main class="px-10 py-6 flex-grow">
