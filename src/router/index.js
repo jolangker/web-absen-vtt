@@ -59,7 +59,7 @@ const routes = [
       {
         path: "absensi",
         name: "Admin.Absensi",
-        component: () => import("../views/admin/Absensi.vue"),
+        component: () => import("../views/admin/absensi/Absensi.vue"),
       },
     ],
   },

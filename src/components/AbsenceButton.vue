@@ -70,6 +70,7 @@ export default {
           Authorization: `Bearer ${retToken}`,
         },
       });
+
       try {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
@@ -102,7 +103,6 @@ export default {
           checked_out: false,
         }),
       });
-      console.log(await res.json());
       try {
         if (!res.ok) throw res.statusText;
         status.value = true;
@@ -110,10 +110,9 @@ export default {
         alert("Check In Berhasil");
       } catch (err) {
         alert(err);
-        // router.push({ name: "Login" });
+        router.push({ name: "Login" });
       }
     };
-
     const checkOut = async () => {
       const res = await fetch(`${cors}${urlAbsensi}${id.value}/`, {
         method: "PATCH",
@@ -135,7 +134,7 @@ export default {
         alert("Check Out Berhasil");
       } catch (err) {
         alert(err);
-        // router.push({ name: "Login" });
+        router.push({ name: "Login" });
       }
     };
 
