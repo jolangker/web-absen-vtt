@@ -58,4 +58,19 @@
   .crud__label {
     @apply text-xl font-medium;
   }
+  .table__layout {
+    @apply table-auto w-full bg-white shadow border border-blue-400 border-t-0;
+  }
+  .table__header {
+    @apply bg-blue-500 text-white;
+  }
+  .header__field {
+    @apply font-semibold py-4 px-6;
+  }
+  .body__row {
+    @apply hover:bg-gray-200 border-t border-blue-400;
+  }
+  .body__field {
+    @apply py-3 px-6;
+  }
 }
