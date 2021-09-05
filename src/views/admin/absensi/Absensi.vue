@@ -1,9 +1,12 @@
 <template>
   <div class="flex justify-between items-center space-x-6">
-    <button class="btn btn__blue text-base">
+    <router-link
+      :to="{ name: 'Admin.Absensi.Add' }"
+      class="btn btn__blue text-base"
+    >
       <i class="fas fa-calendar-plus"></i>
       <span class="ml-3">Tambah Custom Absen</span>
-    </button>
+    </router-link>
     <span class="btn bg-blue-500 flex-grow text-center">
       {{ displayDate }}
     </span>

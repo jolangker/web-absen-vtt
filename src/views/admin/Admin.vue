@@ -1,5 +1,4 @@
 <template>
-  <!--  -->
   <div class="flex" v-if="session">
     <Sidebar />
     <main class="px-10 py-6 flex-grow">
@@ -40,4 +39,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.router-link-active {
+  background: rgba(30, 64, 175);
+}
+</style>
