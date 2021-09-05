@@ -39,7 +39,7 @@
           <td class="header__field">NISN</td>
           <td class="header__field">Check In</td>
           <td class="header__field">Check Out</td>
-          <td class="header__field">Aksi</td>
+          <td class="header__field text-center">Aksi</td>
         </tr>
       </thead>
       <tbody>
@@ -61,7 +61,7 @@
                 : "-"
             }}
           </td>
-          <td>
+          <td class="body__field text-center">
             <router-link
               class="btn btn__green"
               :to="{
@@ -72,6 +72,10 @@
               <i class="fas fa-edit"></i>
               <span class="ml-3">Edit</span>
             </router-link>
+            <button class="btn btn__red ml-2" @click="deleteData(attd.id)">
+              <i class="fas fa-calendar-times"></i>
+              <span class="ml-3"> Delete</span>
+            </button>
           </td>
         </tr>
       </tbody>
@@ -89,7 +93,7 @@ import { useRouter } from "vue-router";
 export default {
   components: { Loading, AttendanceNow },
   setup() {
-    const { urlDaily, cors, retToken } = getVariables();
+    const { urlDaily, urlAbsensi, cors, retToken } = getVariables();
     const { daily } = getDaily();
     const date = ref(daily);
     const router = useRouter();
@@ -157,12 +161,28 @@ export default {
 
     showDate();
 
+    const deleteData = async (id) => {
+      const res = await fetch(`${cors}${urlAbsensi}${id}/`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${retToken}`,
+        },
+      });
+      try {
+        if (!res.ok) throw res.statusText;
+        alert("Absensi Berhasil Dihapus");
+        router.go(0);
+      } catch (err) {
+        alert(err);
+      }
+    };
     return {
       students,
       date,
       attds,
       fetchDaily,
       displayDate,
+      deleteData,
     };
   },
 };
