@@ -66,6 +66,12 @@ const routes = [
         name: "Admin.Absensi.Add",
         component: () => import("../views/admin/absensi/Add.vue"),
       },
+      {
+        path: "absensi/edit/:id",
+        name: "Admin.Absensi.Edit",
+        component: () => import("../views/admin/absensi/Edit.vue"),
+        props: true,
+      },
     ],
   },
   {

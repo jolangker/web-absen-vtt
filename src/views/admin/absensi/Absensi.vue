@@ -43,7 +43,8 @@
         <td class="font-semibold py-4 px-6">No</td>
         <td class="font-semibold py-4 px-6">NISN</td>
         <td class="font-semibold py-4 px-6">Check In</td>
-        <td class="font-semibold py-4 px-6 w-1/4">Check Out</td>
+        <td class="font-semibold py-4 px-6">Check Out</td>
+        <td class="font-semibold py-4 px-6">Aksi</td>
       </tr>
     </thead>
     <tbody>
@@ -51,7 +52,7 @@
         v-if="!attds.length"
         class="hover:bg-gray-200 border-t border-blue-400"
       >
-        <td colspan="4" class="text-center font-medium text-lg p-6">
+        <td colspan="5" class="text-center font-medium text-lg p-6">
           Tidak Ada Absensi
         </td>
       </tr>
@@ -72,6 +73,18 @@
               ? `${new Date(attd.checkout).toLocaleTimeString()}`
               : "-"
           }}
+        </td>
+        <td>
+          <router-link
+            class="btn btn__green"
+            :to="{
+              name: 'Admin.Absensi.Edit',
+              params: { id: attd.id },
+            }"
+          >
+            <i class="fas fa-edit"></i>
+            <span class="ml-3">Edit</span>
+          </router-link>
         </td>
       </tr>
     </tbody>
