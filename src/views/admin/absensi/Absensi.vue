@@ -1,94 +1,82 @@
 <template>
-  <div class="flex justify-between items-center space-x-6">
-    <router-link
-      :to="{ name: 'Admin.Absensi.Add' }"
-      class="btn btn__blue text-base"
-    >
-      <i class="fas fa-calendar-plus"></i>
-      <span class="ml-3">Tambah Custom Absen</span>
-    </router-link>
-    <span class="btn bg-blue-500 flex-grow text-center">
-      {{ displayDate }}
-    </span>
-    <input
-      type="date"
-      class="
-        shadow
-        rounded
-        bg-blue-500
-        text-white
-        px-4
-        text-lg text-right
-        hover:bg-blue-600
-        focus:outline-none focus:border-blue-600
-        font-mono
-        duration-300
-      "
-      v-model="date"
-      @change="fetchDaily"
-    />
+  <div>
+    <attendance-now />
   </div>
-  <table
-    class="
-      mt-2
-      table-auto
-      w-full
-      bg-white
-      shadow
-      border border-blue-400 border-t-0
-    "
-  >
-    <thead class="bg-blue-500 text-white">
-      <tr>
-        <td class="font-semibold py-4 px-6">No</td>
-        <td class="font-semibold py-4 px-6">NISN</td>
-        <td class="font-semibold py-4 px-6">Check In</td>
-        <td class="font-semibold py-4 px-6">Check Out</td>
-        <td class="font-semibold py-4 px-6">Aksi</td>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        v-if="!attds.length"
-        class="hover:bg-gray-200 border-t border-blue-400"
+  <div class="mt-4">
+    <div class="flex justify-between items-center space-x-6">
+      <router-link
+        :to="{ name: 'Admin.Absensi.Add' }"
+        class="btn btn__blue text-base"
       >
-        <td colspan="5" class="text-center font-medium text-lg p-6">
-          Tidak Ada Absensi
-        </td>
-      </tr>
-      <tr
-        v-else
-        class="hover:bg-gray-200 border-t border-blue-400"
-        v-for="attd in attds"
-        :key="attd"
-      >
-        <td class="py-3 px-6">{{ attd.no }}</td>
-        <td class="py-3 px-6">{{ attd.id_absensi }}</td>
-        <td class="py-3 px-6">
-          {{ new Date(attd.checkin).toLocaleTimeString() }}
-        </td>
-        <td class="py-3 px-6">
-          {{
-            attd.checkout
-              ? `${new Date(attd.checkout).toLocaleTimeString()}`
-              : "-"
-          }}
-        </td>
-        <td>
-          <router-link
-            class="btn btn__green"
-            :to="{
-              name: 'Admin.Absensi.Edit',
-              params: { id: attd.id },
-            }"
-          >
-            <i class="fas fa-edit"></i>
-            <span class="ml-3">Edit</span>
-          </router-link>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        <i class="fas fa-calendar-plus"></i>
+        <span class="ml-3">Tambah Custom Absen</span>
+      </router-link>
+      <span class="btn bg-blue-500 flex-grow text-center">
+        {{ displayDate }}
+      </span>
+      <input
+        type="date"
+        class="
+          shadow
+          rounded
+          bg-blue-500
+          text-white
+          px-4
+          text-lg text-right
+          hover:bg-blue-600
+          focus:outline-none focus:border-blue-600
+          font-mono
+          duration-300
+        "
+        v-model="date"
+        @change="fetchDaily"
+      />
+    </div>
+    <table class="mt-1 table__layout">
+      <thead class="table__header">
+        <tr>
+          <td class="header__field">No</td>
+          <td class="header__field">NISN</td>
+          <td class="header__field">Check In</td>
+          <td class="header__field">Check Out</td>
+          <td class="header__field">Aksi</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if="!attds.length" class="body__row">
+          <td colspan="5" class="text-center font-medium text-lg p-6">
+            Tidak Ada Absensi
+          </td>
+        </tr>
+        <tr v-else class="body__row" v-for="attd in attds" :key="attd">
+          <td class="body__field">{{ attd.no }}</td>
+          <td class="body__field">{{ attd.id_absensi }}</td>
+          <td class="body__field">
+            {{ new Date(attd.checkin).toLocaleTimeString() }}
+          </td>
+          <td class="body__field">
+            {{
+              attd.checkout
+                ? `${new Date(attd.checkout).toLocaleTimeString()}`
+                : "-"
+            }}
+          </td>
+          <td>
+            <router-link
+              class="btn btn__green"
+              :to="{
+                name: 'Admin.Absensi.Edit',
+                params: { id: attd.id },
+              }"
+            >
+              <i class="fas fa-edit"></i>
+              <span class="ml-3">Edit</span>
+            </router-link>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -96,9 +84,10 @@ import { ref } from "@vue/reactivity";
 import getVariables from "../../../composables/getVariables";
 import getDaily from "../../../composables/getDaily";
 import Loading from "../../../components/Loading.vue";
+import AttendanceNow from "../../../components/AttendanceNow.vue";
 import { useRouter } from "vue-router";
 export default {
-  components: { Loading },
+  components: { Loading, AttendanceNow },
   setup() {
     const { urlDaily, cors, retToken } = getVariables();
     const { daily } = getDaily();
