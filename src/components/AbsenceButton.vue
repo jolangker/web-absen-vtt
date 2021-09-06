@@ -82,6 +82,7 @@ export default {
             student.daily.includes(daily.value)
           );
         });
+      console.log(getStudent.value);
       id.value = getStudent.value[0]?.id;
       status.value = getStudent.value[0]?.checked_in;
     };
@@ -89,29 +90,32 @@ export default {
     fetchData();
 
     const checkIn = async () => {
-      const res = await fetch(`${cors}${urlAbsensi}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${retToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id_absensi: nisn,
-          status: true,
-          checked_in: true,
-          checked_out: false,
-          daily: daily.value,
-          checkin: new Date().toJSON(),
-        }),
-      });
-      try {
-        if (!res.ok) throw res.statusText;
-        status.value = true;
-        router.go(0);
-        alert("Check In Berhasil");
-      } catch (err) {
-        alert(err);
-        router.push({ name: "Login" });
+      if (getStudent.value.length >= 1) {
+        alert("Kamu Sudah Absen Hari Ini");
+      } else {
+        const res = await fetch(`${cors}${urlAbsensi}`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${retToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id_absensi: nisn,
+            status: true,
+            checked_in: true,
+            checked_out: false,
+            daily: daily.value,
+            checkin: new Date().toJSON(),
+          }),
+        });
+        try {
+          if (!res.ok) throw res.statusText;
+          status.value = true;
+          alert("Check In Berhasil");
+        } catch (err) {
+          alert(err);
+          router.push({ name: "Login" });
+        }
       }
     };
     const checkOut = async () => {
