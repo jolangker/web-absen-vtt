@@ -12,4 +12,65 @@
   .error__message {
     @apply mt-2 text-xs font-semibold italic text-red-500;
   }
+  .sidebar {
+    @apply flex flex-col text-white;
+  }
+  .sidebar__menu {
+    @apply duration-300 hover:bg-blue-800;
+  }
+  .sidebar__link {
+    @apply flex items-center  py-4 px-8;
+  }
+  .sidebar__icon {
+    @apply w-8 text-lg;
+  }
+  .sidebar__text {
+    @apply ml-2 font-medium;
+  }
+  .btn {
+    @apply py-1 px-4 rounded text-white font-medium border duration-300;
+  }
+  .btn__green {
+    @apply bg-green-500 hover:bg-white hover:text-green-500 hover:border-green-500;
+  }
+  .btn__red {
+    @apply bg-red-500 hover:bg-white hover:text-red-500 hover:border-red-500;
+  }
+  .btn__blue {
+    @apply bg-blue-500 hover:bg-white hover:text-blue-500 hover:border-blue-500;
+  }
+
+  .btn__delete {
+    @apply bg-red-500 py-1 px-4 rounded text-white font-medium border duration-300 hover:bg-gray-200 hover:text-red-500 hover:border-red-500;
+  }
+  .crud {
+    @apply py-4 flex flex-col space-y-6;
+  }
+  .crud__wrapper {
+    @apply bg-white rounded shadow p-8;
+  }
+  .crud__header {
+    @apply text-2xl pb-2 font-medium border-b-2 border-blue-400;
+  }
+  .crud__form {
+    @apply mt-2 w-full py-3 px-6 ring-2 ring-gray-300 rounded font-medium focus:outline-none focus:ring-blue-400;
+  }
+  .crud__label {
+    @apply text-xl font-medium;
+  }
+  .table__layout {
+    @apply table-auto w-full bg-white shadow border border-blue-400 border-t-0;
+  }
+  .table__header {
+    @apply bg-blue-500 text-white;
+  }
+  .header__field {
+    @apply font-semibold py-4 px-6;
+  }
+  .body__row {
+    @apply hover:bg-gray-200 border-t border-blue-400;
+  }
+  .body__field {
+    @apply py-3 px-6;
+  }
 }

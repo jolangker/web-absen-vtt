@@ -30,7 +30,6 @@
         </p>
 
         <button class="btn__login mt-3">LOGIN</button>
-        <slot></slot>
       </form>
     </div>
   </div>

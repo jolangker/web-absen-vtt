@@ -1,7 +1,7 @@
 <template>
   <div v-if="Object.keys(student).length">
     <Header :student="student" />
-    <main class="px-16 py-6">
+    <main class="px-4 lg:px-16 py-6">
       <Absence />
     </main>
   </div>

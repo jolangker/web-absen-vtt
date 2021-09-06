@@ -47,7 +47,22 @@ export default {
     const nisn = sessionStorage.getItem("nisn");
     const getStudent = ref([]);
     const id = ref(0);
-    const status = ref(null);
+    const status = ref(false);
+    const daily = ref("");
+
+    const getDaily = () => {
+      const date = new Date();
+      let y = date.getFullYear();
+      let m = date.getMonth() + 1;
+      let d = date.getDate();
+
+      m = m < 10 ? "0" + m : m;
+      d = d < 10 ? "0" + d : d;
+
+      daily.value = `${y}-${m}-${d}`;
+    };
+
+    getDaily();
 
     const fetchData = async () => {
       const res = await fetch(`${cors}${urlAbsensi}`, {
@@ -56,38 +71,49 @@ export default {
         },
       });
       const data = await res.json();
-      getStudent.value = data.filter((student) => {
-        return student.id_absensi.includes(nisn);
-      });
-      id.value = getStudent.value[0].id;
-      status.value = getStudent.value[0].status;
-      console.log(status.value);
+      getStudent.value = data
+        .map((std) => {
+          std.daily = daily.value;
+          return std;
+        })
+        .filter((student) => {
+          return (
+            student.id_absensi.includes(nisn) &&
+            student.daily.includes(daily.value)
+          );
+        });
+      id.value = getStudent.value[0]?.id;
+      status.value = getStudent.value[0]?.checked_in;
     };
 
     fetchData();
 
     const checkIn = async () => {
-      const res = await fetch(`${cors}${urlAbsensi}${id.value}/`, {
-        method: "PATCH",
+      const res = await fetch(`${cors}${urlAbsensi}`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${retToken}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          id_absensi: nisn,
           status: true,
+          checked_in: true,
+          checked_out: false,
+          daily: daily.value,
           checkin: new Date().toJSON(),
         }),
       });
       try {
         if (!res.ok) throw res.statusText;
         status.value = true;
+        router.go(0);
         alert("Check In Berhasil");
       } catch (err) {
         alert(err);
         router.push({ name: "Login" });
       }
     };
-
     const checkOut = async () => {
       const res = await fetch(`${cors}${urlAbsensi}${id.value}/`, {
         method: "PATCH",
@@ -96,7 +122,9 @@ export default {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          status: false,
+          id_absensi: nisn,
+          checked_in: false,
+          checked_out: true,
           checkout: new Date().toJSON(),
         }),
       });
@@ -114,6 +142,7 @@ export default {
       status,
       checkIn,
       checkOut,
+      status,
     };
   },
 };
