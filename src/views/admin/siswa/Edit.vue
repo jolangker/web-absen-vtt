@@ -1,6 +1,6 @@
 <template>
   <div class="crud__wrapper">
-    <h2 class="crud__header">EDIT {{ student.name }}</h2>
+    <h2 class="crud__header uppercase">EDIT {{ name }}</h2>
     <form class="crud" @submit.prevent="updateData">
       <div>
         <label for="id_student" class="crud__label">ID</label>
@@ -47,7 +47,7 @@
         <label for="class_student" class="crud__label">KELAS</label>
         <select
           id="class_student"
-          class="block w-full crud__form"
+          class="crud__form appearance-none cursor-pointer"
           v-model="id_kelas"
           required
         >
@@ -62,7 +62,7 @@
         <label for="major_student" class="crud__label">Jurusan</label>
         <select
           id="major_student"
-          class="block w-full crud__form"
+          class="crud__form appearance-none cursor-pointer"
           v-model="id_jurusan"
           required
         >
@@ -87,17 +87,16 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import BackButton from "../../../components/BackButton.vue";
 import getVariables from "../../../composables/getVariables";
 export default {
-  props: ["id"],
   components: { BackButton },
-  setup(props) {
+  setup() {
     const { urlSiswa, cors, retToken } = getVariables();
+    const route = useRoute();
     const router = useRouter();
-    const student = ref({});
-
+    const id = route.params.id;
     const nisn = ref("");
     const name = ref("");
     const username = ref("");
@@ -105,12 +104,8 @@ export default {
     const id_kelas = ref(0);
     const id_jurusan = ref(0);
 
-    const back = () => {
-      router.go(-1);
-    };
-
     const fetchData = async () => {
-      const res = await fetch(`${cors}${urlSiswa}${props.id}`, {
+      const res = await fetch(`${cors}${urlSiswa}${id}`, {
         headers: {
           Authorization: `Bearer ${retToken}`,
         },
@@ -119,13 +114,12 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
-        student.value = data;
-        nisn.value = student.value.nisn;
-        name.value = student.value.name;
-        username.value = student.value.username;
-        password.value = student.value.password;
-        id_kelas.value = student.value.id_kelas;
-        id_jurusan.value = student.value.id_jurusan;
+        nisn.value = data.nisn;
+        name.value = data.name;
+        username.value = data.username;
+        password.value = data.password;
+        id_kelas.value = data.id_kelas;
+        id_jurusan.value = data.id_jurusan;
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });
@@ -135,7 +129,7 @@ export default {
     fetchData();
 
     const updateData = async () => {
-      const res = await fetch(`${cors}${urlSiswa}${props.id}/`, {
+      const res = await fetch(`${cors}${urlSiswa}${id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -160,14 +154,12 @@ export default {
     };
 
     return {
-      student,
       nisn,
       name,
       username,
       password,
       id_kelas,
       id_jurusan,
-      back,
       updateData,
     };
   },

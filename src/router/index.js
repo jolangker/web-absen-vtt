@@ -31,7 +31,6 @@ const routes = [
         path: "siswa/edit/:id",
         name: "Admin.Siswa.Edit",
         component: () => import("../views/admin/siswa/Edit.vue"),
-        props: true,
       },
       {
         path: "siswa/add",
@@ -48,13 +47,11 @@ const routes = [
         path: "kelas-jurusan/edit/kelas/:id",
         name: "Admin.KJ.Edit.Kelas",
         component: () => import("../views/admin/kelas-jurusan/EditKelas.vue"),
-        props: true,
       },
       {
         path: "kelas-jurusan/edit/jurusan/:id",
         name: "Admin.KJ.Edit.Jurusan",
         component: () => import("../views/admin/kelas-jurusan/EditJurusan.vue"),
-        props: true,
       },
       {
         path: "absensi",
@@ -70,7 +67,6 @@ const routes = [
         path: "absensi/edit/:id",
         name: "Admin.Absensi.Edit",
         component: () => import("../views/admin/absensi/Edit.vue"),
-        props: true,
       },
     ],
   },

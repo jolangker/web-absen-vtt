@@ -42,7 +42,7 @@
         />
       </div>
       <div>
-        <label for="checkout_time" class="crud__label">WAKTU checkout</label>
+        <label for="checkout_time" class="crud__label">WAKTU CHECKOUT</label>
         <input
           id="checkout_time"
           type="time"
@@ -66,8 +66,7 @@ import BackButton from "../../../components/BackButton.vue";
 import getVariables from "../../../composables/getVariables";
 export default {
   components: { BackButton },
-  props: ["id"],
-  setup(props) {
+  setup() {
     const { urlAbsensi, cors, retToken } = getVariables();
     const route = useRoute();
     const router = useRouter();
@@ -125,12 +124,10 @@ export default {
         body: JSON.stringify({
           daily: daily.value,
           checkin: checkin,
-          checkout: checkout,
-          checked_out: checkout_input ? true : false,
+          checkout: checkout_input.value ? checkout : null,
+          checked_out: checkout_input.value ? true : false,
         }),
       });
-      console.log(await res.json());
-      console.log(checkin);
       try {
         if (!res.ok) throw res.statusText;
         alert("Absensi Berhasil Dirubah");

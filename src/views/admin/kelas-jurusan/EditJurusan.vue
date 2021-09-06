@@ -35,20 +35,21 @@
 
 <script>
 import { ref } from "@vue/reactivity";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import getVariables from "../../../composables/getVariables";
 import BackButton from "../../../components/BackButton.vue";
 export default {
-  props: ["id"],
   components: { BackButton },
-  setup(props) {
+  setup() {
     const { urlJurusan, cors, retToken } = getVariables();
+    const route = useRoute();
     const router = useRouter();
+    const id = route.params.id;
     const majorID = ref(0);
     const majorName = ref("");
 
     const fetchClass = async () => {
-      const res = await fetch(`${cors}${urlJurusan}${props.id}`, {
+      const res = await fetch(`${cors}${urlJurusan}${id}`, {
         headers: {
           Authorization: `Bearer ${retToken}`,
         },
@@ -67,21 +68,20 @@ export default {
     fetchClass();
 
     const updateMajor = async () => {
-      const res = await fetch(`${cors}${urlJurusan}${props.id}/`, {
+      const res = await fetch(`${cors}${urlJurusan}${id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${retToken}`,
         },
         body: JSON.stringify({
-          id_jurusan: majorID.value,
           jurusan: majorName.value,
         }),
       });
       try {
         if (!res.ok) throw res.statusText;
         alert("Update Berhasil");
-        router.push({ name: "Admin.JK" });
+        router.push({ name: "Admin.KJ" });
       } catch (err) {
         alert.err;
       }

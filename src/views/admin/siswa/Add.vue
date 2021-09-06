@@ -1,6 +1,6 @@
 <template>
   <div class="crud__wrapper">
-    <h2 class="crud__header">TAMBAH USER</h2>
+    <h2 class="crud__header">TAMBAH SISWA</h2>
     <form class="crud" @submit.prevent="addData">
       <div>
         <label for="id_student" class="crud__label">ID</label>
@@ -46,7 +46,7 @@
         <label for="class_student" class="crud__label">KELAS</label>
         <select
           id="class_student"
-          class="block w-full crud__form"
+          class="crud__form appearance-none cursor-pointer"
           v-model="id_kelas"
           required
         >
@@ -61,7 +61,7 @@
         <label for="major_student" class="crud__label">Jurusan</label>
         <select
           id="major_student"
-          class="block w-full crud__form"
+          class="crud__form appearance-none cursor-pointer"
           v-model="id_jurusan"
           required
         >

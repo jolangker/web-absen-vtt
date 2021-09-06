@@ -9,7 +9,7 @@
         class="btn btn__blue text-base"
       >
         <i class="fas fa-calendar-plus"></i>
-        <span class="ml-3">Tambah Custom Absen</span>
+        <span class="ml-3">Tambah Custom Absensi</span>
       </router-link>
       <span class="btn bg-blue-500 flex-grow text-center">
         {{ displayDate }}
@@ -162,18 +162,20 @@ export default {
     showDate();
 
     const deleteData = async (id) => {
-      const res = await fetch(`${cors}${urlAbsensi}${id}/`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${retToken}`,
-        },
-      });
-      try {
-        if (!res.ok) throw res.statusText;
-        alert("Absensi Berhasil Dihapus");
-        router.go(0);
-      } catch (err) {
-        alert(err);
+      if (confirm("Are You Sure?")) {
+        const res = await fetch(`${cors}${urlAbsensi}${id}/`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${retToken}`,
+          },
+        });
+        try {
+          if (!res.ok) throw res.statusText;
+          alert("Absensi Berhasil Dihapus");
+          router.go(0);
+        } catch (err) {
+          alert(err);
+        }
       }
     };
     return {
