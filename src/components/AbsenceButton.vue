@@ -70,21 +70,20 @@ export default {
           Authorization: `Bearer ${retToken}`,
         },
       });
-
-      try {
-        if (!res.ok) throw res.statusText;
-        const data = await res.json();
-        getStudent.value = data.filter((student) => {
+      const data = await res.json();
+      getStudent.value = data
+        .map((std) => {
+          std.daily = daily.value;
+          return std;
+        })
+        .filter((student) => {
           return (
             student.id_absensi.includes(nisn) &&
             student.daily.includes(daily.value)
           );
         });
-        id.value = getStudent.value[0].id;
-        status.value = getStudent.value[0].checked_in;
-      } catch (err) {
-        console.log(err);
-      }
+      id.value = getStudent.value[0]?.id;
+      status.value = getStudent.value[0]?.checked_in;
     };
 
     fetchData();
@@ -101,6 +100,8 @@ export default {
           status: true,
           checked_in: true,
           checked_out: false,
+          daily: daily.value,
+          checkin: new Date().toJSON(),
         }),
       });
       try {
@@ -127,7 +128,6 @@ export default {
           checkout: new Date().toJSON(),
         }),
       });
-      console.log(await res.json());
       try {
         if (!res.ok) throw res.statusText;
         status.value = false;

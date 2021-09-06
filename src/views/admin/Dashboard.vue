@@ -32,7 +32,7 @@ export default {
   components: { DateTime, AttendanceInfo },
   setup() {
     const router = useRouter();
-    const { urlSiswa, urlAbsensi, retToken } = getVariables();
+    const { urlSiswa, urlDaily, cors, retToken } = getVariables();
     const students = ref(0);
     const attend = ref(0);
     const notAttend = ref(0);
@@ -53,7 +53,7 @@ export default {
     getDaily();
 
     const fetchSiswa = async () => {
-      const res = await fetch(`${urlSiswa}`, {
+      const res = await fetch(`${cors}${urlSiswa}`, {
         headers: {
           Authorization: `Bearer ${retToken}`,
         },
@@ -69,20 +69,15 @@ export default {
     };
 
     const fetchAbsensi = async () => {
-      const res = await fetch(`${urlAbsensi}`, {
+      const res = await fetch(`${cors}${urlDaily}${daily.value}`, {
         headers: {
           Authorization: `Bearer ${retToken}`,
         },
       });
       try {
-        if (!res.ok) throw new Error(res.statusText);
+        if (!res.ok) throw res.statusText;
         const data = await res.json();
-        attend.value = data.filter((atts) => {
-          return (
-            atts.status.toLocaleString().includes("true") &&
-            atts.daily.includes(daily.value)
-          );
-        }).length;
+        attend.value = data.length;
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });
