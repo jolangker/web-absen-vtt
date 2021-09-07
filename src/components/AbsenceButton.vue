@@ -77,7 +77,6 @@ export default {
           student.daily?.includes(daily.value)
         );
       });
-      console.log(getStudent.value);
       id.value = getStudent.value[0]?.id;
       status.value = getStudent.value[0]?.checked_in;
     };
@@ -107,6 +106,7 @@ export default {
           if (!res.ok) throw res.statusText;
           status.value = true;
           alert("Check In Berhasil");
+          router.go(0);
         } catch (err) {
           alert(err);
           router.push({ name: "Login" });
