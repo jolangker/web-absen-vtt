@@ -71,17 +71,12 @@ export default {
         },
       });
       const data = await res.json();
-      getStudent.value = data
-        .map((std) => {
-          std.daily = daily.value;
-          return std;
-        })
-        .filter((student) => {
-          return (
-            student.id_absensi.includes(nisn) &&
-            student.daily.includes(daily.value)
-          );
-        });
+      getStudent.value = data.filter((student) => {
+        return (
+          student.id_absensi?.includes(nisn) &&
+          student.daily?.includes(daily.value)
+        );
+      });
       console.log(getStudent.value);
       id.value = getStudent.value[0]?.id;
       status.value = getStudent.value[0]?.checked_in;

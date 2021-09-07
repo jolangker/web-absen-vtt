@@ -3,9 +3,10 @@
   <table class="table__layout mt-1">
     <thead class="table__header">
       <tr class="header__row text-center">
-        <td class="header__field p-2">No</td>
-        <td class="header__field p-2">NISN</td>
-        <td class="header__field p-2">Sudah Absen</td>
+        <td class="header__field py-2 px-6">No</td>
+        <td class="header__field py-2 px-6">NISN</td>
+        <td class="header__field py-2 px-6">Waktu Absen</td>
+        <td class="header__field py-2 px-6">Sudah Absen</td>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +22,9 @@
       >
         <td class="body__field">{{ student.no }}</td>
         <td class="body__field">{{ student.id_absensi }}</td>
+        <td class="body__field">
+          {{ new Date(student.checkin).toLocaleTimeString() }}
+        </td>
         <td class="body__field">
           <i class="fas fa-check-circle text-green-500"></i>
         </td>

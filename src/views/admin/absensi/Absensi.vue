@@ -39,7 +39,7 @@
           <td class="header__field">NISN</td>
           <td class="header__field">Check In</td>
           <td class="header__field">Check Out</td>
-          <td class="header__field text-center">Aksi</td>
+          <td class="header__field text-center w-80">Aksi</td>
         </tr>
       </thead>
       <tbody>

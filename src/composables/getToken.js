@@ -1,8 +1,6 @@
-import { ref } from "vue";
-
 const getToken = async () => {
   const url = "https://absenvttv3.herokuapp.com/api/token/";
-  const cors = "https://cors-anywhere.herokuapp.com/";
+  const cors = "https://proxyabsenvtt.herokuapp.com/";
 
   const res = await fetch(`${cors}${url}`, {
     method: "POST",

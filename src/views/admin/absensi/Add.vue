@@ -40,6 +40,16 @@
           required
         />
       </div>
+      <div>
+        <label for="checkout_time" class="crud__label">WAKTU CHECKOUT</label>
+        <input
+          id="checkout_time"
+          type="time"
+          class="crud__form"
+          v-model="checkout_input"
+          required
+        />
+      </div>
       <button type="submit" class="btn btn__green py-2 px-6">
         <i class="fas fa-calendar-check"></i>
         <span class="ml-3">Tambah Absensi</span>
@@ -62,6 +72,7 @@ export default {
     const nisn = ref("");
     const daily = ref("");
     const checkin_input = ref("");
+    const checkout_input = ref("");
     const students = ref([]);
 
     const fetchData = async () => {
@@ -83,6 +94,7 @@ export default {
 
     const addData = async () => {
       const checkin = `${daily.value}T${checkin_input.value}+07:00`;
+      const checkout = `${daily.value}T${checkout_input.value}+07:00`;
 
       const res = await fetch(`${cors}${urlAbsensi}`, {
         method: "POST",
@@ -95,8 +107,9 @@ export default {
           daily: daily.value,
           status: true,
           checkin: checkin,
+          checkout: checkout ? checkout : null,
           checked_in: true,
-          checked_out: false,
+          checked_out: checkout ? true : false,
         }),
       });
       try {
@@ -112,6 +125,7 @@ export default {
       nisn,
       daily,
       checkin_input,
+      checkout_input,
       addData,
       students,
     };
