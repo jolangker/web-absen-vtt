@@ -1,39 +1,42 @@
 <template>
-  <div v-if="filteredData.length">
+  <div v-if="students.length">
     <div class="mt-5 flex justify-between">
-      <router-link :to="{ name: 'Admin.Siswa.Add' }" class="btn btn__blue py-1">
+      <router-link
+        :to="{ name: 'Admin.Siswa.Add' }"
+        class="btn btn__blue py-1 px-8"
+      >
         <i class="fas fa-user-plus"></i>
         <span class="ml-3">Tambah Siswa</span>
       </router-link>
-      <div>
+      <div class="flex space-x-2">
+        <class-filter @sendClassFilter="getClassFilter" />
         <major-filter @sendMajorFilter="getMajorFilter" />
       </div>
     </div>
-    <table
-      class="mt-2 table-auto w-full bg-white shadow border border-blue-400"
-    >
-      <thead class="bg-blue-500 text-center text-white">
+    <table class="table__layout mt-2">
+      <thead class="table__header text-center">
         <tr class="p-2">
-          <td class="font-semibold py-4">No</td>
-          <td class="font-semibold py-4">NISN</td>
-          <td class="font-semibold py-4">Name</td>
-          <td class="font-semibold py-4">Kelas</td>
-          <td class="font-semibold py-4">Jurusan</td>
-          <td class="font-semibold py-4 w-1/4">Aksi</td>
+          <td class="header__field">No</td>
+          <td class="header__field">NISN</td>
+          <td class="header__field">Name</td>
+          <td class="header__field">Kelas</td>
+          <td class="header__field">Jurusan</td>
+          <td class="header__field w-1/4">Aksi</td>
         </tr>
       </thead>
       <tbody class="text-center capitalize">
-        <tr
-          class="hover:bg-gray-200 border-t border-blue-400"
-          v-for="student in filteredData"
-          :key="student"
-        >
-          <td class="py-3">{{ student.no }}</td>
-          <td class="py-3">{{ student.nisn }}</td>
-          <td class="py-3">{{ student.name }}</td>
-          <td class="py-3">{{ student.id_kelas }}</td>
-          <td class="py-3">{{ student.id_jurusan }}</td>
-          <td class="py-3 flex justify-center space-x-2">
+        <tr class="body__row" v-if="!filteredData.length">
+          <td colspan="6" class="p-8 font-medium text-lg">
+            Tidak Ada Data Yang Tersedia
+          </td>
+        </tr>
+        <tr class="body__row" v-for="student in filteredData" :key="student">
+          <td class="body__field px-0">{{ student.no }}</td>
+          <td class="body__field px-0">{{ student.nisn }}</td>
+          <td class="body__field px-0">{{ student.name }}</td>
+          <td class="body__field px-0">{{ student.id_kelas }}</td>
+          <td class="body__field px-0">{{ student.id_jurusan }}</td>
+          <td class="body__field px-0 flex justify-center space-x-2">
             <router-link
               class="btn btn__green"
               :to="{ name: 'Admin.Siswa.Edit', params: { id: student.nisn } }"
@@ -60,9 +63,10 @@ import { computed, ref } from "@vue/reactivity";
 import getVariables from "../../../composables/getVariables";
 import Loading from "../../../components/Loading.vue";
 import MajorFilter from "../../../components/MajorFilter.vue";
+import ClassFilter from "../../../components/ClassFilter.vue";
 import { useRouter } from "vue-router";
 export default {
-  components: { Loading, MajorFilter },
+  components: { Loading, MajorFilter, ClassFilter },
   setup() {
     const { urlSiswa, cors, retToken } = getVariables();
     const router = useRouter();
@@ -94,11 +98,19 @@ export default {
       acceptMajorFilter.value = value;
     };
 
+    const acceptClassFilter = ref("");
+    const getClassFilter = (value) => {
+      acceptClassFilter.value = value;
+    };
+
     const filteredData = computed(() => {
       let no = 1;
       return students.value
         .filter((std) => {
-          return std.id_jurusan.includes(acceptMajorFilter.value);
+          return (
+            std.id_jurusan.includes(acceptMajorFilter.value) &&
+            std.id_kelas.includes(acceptClassFilter.value)
+          );
         })
         .map((std) => {
           std.no = no++;
@@ -128,6 +140,7 @@ export default {
       students,
       deleteData,
       getMajorFilter,
+      getClassFilter,
       filteredData,
     };
   },
