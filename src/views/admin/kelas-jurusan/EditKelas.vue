@@ -3,23 +3,12 @@
     <h2 class="crud__header">EDIT KELAS</h2>
     <form class="crud" @submit.prevent="updateClass">
       <div>
-        <label for="id_class" class="crud__label">ID</label>
+        <label for="id_class" class="crud__label">KELAS</label>
         <input
           id="id_class"
           type="text"
           class="crud__form"
           v-model="classID"
-          readonly
-          required
-        />
-      </div>
-      <div>
-        <label for="name_class" class="crud__label">Kelas</label>
-        <input
-          id="name_class"
-          type="text"
-          class="crud__form"
-          v-model="className"
           required
         />
       </div>
@@ -46,7 +35,6 @@ export default {
     const router = useRouter();
     const id = route.params.id;
     const classID = ref(0);
-    const className = ref("");
 
     const fetchClass = async () => {
       const res = await fetch(`${cors}${urlKelas}${id}`, {
@@ -58,7 +46,6 @@ export default {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
         classID.value = data.id_kelas;
-        className.value = data.kelas;
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });
@@ -75,7 +62,7 @@ export default {
           Authorization: `Bearer ${retToken}`,
         },
         body: JSON.stringify({
-          kelas: className.value,
+          id_kelas: classID.value,
         }),
       });
       try {
@@ -83,13 +70,13 @@ export default {
         alert("Update Berhasil");
         router.push({ name: "Admin.KJ" });
       } catch (err) {
-        alert.err;
+        alert(err);
+        router.push({ name: "Admin.Login" });
       }
     };
 
     return {
       classID,
-      className,
       updateClass,
     };
   },

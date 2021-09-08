@@ -52,10 +52,10 @@
           required
         >
           <option disabled selected>Pilih Kelas</option>
-          <option value="1">X</option>
-          <option value="2">XI</option>
-          <option value="3">XII</option>
-          <option value="4">XIII</option>
+          <option value="10">X</option>
+          <option value="11">XI</option>
+          <option value="12">XII</option>
+          <option value="13">XIII</option>
         </select>
       </div>
       <div>
@@ -67,12 +67,12 @@
           required
         >
           <option disabled selected>Pilih Jursan</option>
-          <option value="1">KGSP</option>
-          <option value="2">SIJA</option>
-          <option value="3">TEDK</option>
-          <option value="4">TFLM</option>
-          <option value="5">TMPO</option>
-          <option value="6">TTL</option>
+          <option value="KGSP">KGSP</option>
+          <option value="SIJA">SIJA</option>
+          <option value="TEDK">TEDK</option>
+          <option value="TFLM">TFLM</option>
+          <option value="TMPO">TMPO</option>
+          <option value="TTL">TTL</option>
         </select>
       </div>
 
@@ -101,8 +101,8 @@ export default {
     const name = ref("");
     const username = ref("");
     const password = ref("");
-    const id_kelas = ref(0);
-    const id_jurusan = ref(0);
+    const id_kelas = ref("");
+    const id_jurusan = ref("");
 
     const fetchData = async () => {
       const res = await fetch(`${cors}${urlSiswa}${id}`, {

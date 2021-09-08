@@ -1,25 +1,14 @@
 <template>
   <div class="crud__wrapper">
-    <h2 class="crud__header">EDIT KELAS</h2>
+    <h2 class="crud__header">EDIT JURUSAN</h2>
     <form class="crud" @submit.prevent="updateMajor">
       <div>
-        <label for="id_major" class="crud__label">ID</label>
+        <label for="id_major" class="crud__label">JURUSAN</label>
         <input
           id="id_major"
           type="text"
           class="crud__form"
           v-model="majorID"
-          readonly
-          required
-        />
-      </div>
-      <div>
-        <label for="name_major" class="crud__label">Kelas</label>
-        <input
-          id="name_major"
-          type="text"
-          class="crud__form"
-          v-model="majorName"
           required
         />
       </div>
@@ -45,8 +34,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const id = route.params.id;
-    const majorID = ref(0);
-    const majorName = ref("");
+    const majorID = ref("");
 
     const fetchClass = async () => {
       const res = await fetch(`${cors}${urlJurusan}${id}`, {
@@ -58,7 +46,6 @@ export default {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
         majorID.value = data.id_jurusan;
-        majorName.value = data.jurusan;
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });
@@ -75,7 +62,7 @@ export default {
           Authorization: `Bearer ${retToken}`,
         },
         body: JSON.stringify({
-          jurusan: majorName.value,
+          id_jurusan: majorID.value,
         }),
       });
       try {
@@ -89,7 +76,6 @@ export default {
 
     return {
       majorID,
-      majorName,
       updateMajor,
     };
   },

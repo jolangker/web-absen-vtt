@@ -11,9 +11,9 @@
       </caption>
       <thead class="bg-blue-500 text-center text-white">
         <tr class="p-2">
-          <td class="font-semibold py-4">ID</td>
+          <td class="font-semibold py-4">No</td>
           <td class="font-semibold py-4">Kelas</td>
-          <td class="font-semibold py-4 w-1/4">Aksi</td>
+          <!-- <td class="font-semibold py-4 w-1/4">Aksi</td> -->
         </tr>
       </thead>
       <tbody class="text-center">
@@ -22,9 +22,9 @@
           v-for="classs in classes"
           :key="classs"
         >
+          <td class="py-3">{{ classs.no }}</td>
           <td class="py-3">{{ classs.id_kelas }}</td>
-          <td class="py-3">{{ classs.kelas }}</td>
-          <td class="py-3">
+          <!-- <td class="py-3">
             <router-link
               class="btn btn__green"
               :to="{
@@ -35,7 +35,7 @@
               <i class="fas fa-pen"></i>
               <span class="ml-3">Edit</span>
             </router-link>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -47,9 +47,9 @@
       </caption>
       <thead class="bg-blue-500 text-center text-white">
         <tr class="p-2">
-          <td class="font-semibold py-4">ID</td>
+          <td class="font-semibold py-4">No</td>
           <td class="font-semibold py-4">Jurusan</td>
-          <td class="font-semibold py-4 w-1/4">Aksi</td>
+          <!-- <td class="font-semibold py-4 w-1/4">Aksi</td> -->
         </tr>
       </thead>
       <tbody class="text-center">
@@ -58,9 +58,9 @@
           v-for="major in majors"
           :key="major"
         >
+          <td class="py-3">{{ major.no }}</td>
           <td class="py-3">{{ major.id_jurusan }}</td>
-          <td class="py-3">{{ major.jurusan }}</td>
-          <td class="py-3">
+          <!-- <td class="py-3">
             <router-link
               class="btn btn__green"
               :to="{
@@ -71,7 +71,7 @@
               <i class="fas fa-pen"></i>
               <span class="ml-3">Edit</span>
             </router-link>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -95,6 +95,7 @@ export default {
     const majors = ref([]);
 
     const fetchClasses = async () => {
+      let no = 1;
       const res = await fetch(`${cors}${urlKelas}`, {
         headers: {
           Authorization: `Bearer ${retToken}`,
@@ -103,7 +104,10 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
-        classes.value = data;
+        classes.value = data.map((cls) => {
+          cls.no = no++;
+          return cls;
+        });
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });
@@ -111,6 +115,7 @@ export default {
     };
 
     const fetchMajors = async () => {
+      let no = 1;
       const res = await fetch(`${cors}${urlJurusan}`, {
         headers: {
           Authorization: `Bearer ${retToken}`,
@@ -119,7 +124,10 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
-        majors.value = data;
+        majors.value = data.map((mjr) => {
+          mjr.no = no++;
+          return mjr;
+        });
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });

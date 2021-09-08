@@ -63,7 +63,7 @@ export default {
     const { urlSiswa, cors, retToken } = getVariables();
     const router = useRouter();
     const students = ref([]);
-    const no = 1;
+    let no = 1;
 
     const fetchData = async () => {
       const res = await fetch(`${cors}${urlSiswa}`, {
@@ -77,6 +77,7 @@ export default {
         students.value = data;
       } catch (err) {
         alert(err);
+        router.push({ name: "Admin.Login" });
       }
     };
 
@@ -95,6 +96,7 @@ export default {
           router.go();
         } catch (err) {
           alert(err);
+          router.push({ name: "Admin.Login" });
         }
       }
     };
