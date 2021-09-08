@@ -1,13 +1,16 @@
 <template>
-  <div v-if="students.length">
-    <div class="mt-5">
-      <router-link :to="{ name: 'Admin.Siswa.Add' }" class="btn btn__blue py-2">
+  <div v-if="filteredData.length">
+    <div class="mt-5 flex justify-between">
+      <router-link :to="{ name: 'Admin.Siswa.Add' }" class="btn btn__blue py-1">
         <i class="fas fa-user-plus"></i>
         <span class="ml-3">Tambah Siswa</span>
       </router-link>
+      <div>
+        <major-filter @sendMajorFilter="getMajorFilter" />
+      </div>
     </div>
     <table
-      class="mt-4 table-auto w-full bg-white shadow border border-blue-400"
+      class="mt-2 table-auto w-full bg-white shadow border border-blue-400"
     >
       <thead class="bg-blue-500 text-center text-white">
         <tr class="p-2">
@@ -19,13 +22,13 @@
           <td class="font-semibold py-4 w-1/4">Aksi</td>
         </tr>
       </thead>
-      <tbody class="text-center">
+      <tbody class="text-center capitalize">
         <tr
           class="hover:bg-gray-200 border-t border-blue-400"
-          v-for="student in students"
+          v-for="student in filteredData"
           :key="student"
         >
-          <td class="py-3">{{ no++ }}</td>
+          <td class="py-3">{{ student.no }}</td>
           <td class="py-3">{{ student.nisn }}</td>
           <td class="py-3">{{ student.name }}</td>
           <td class="py-3">{{ student.id_kelas }}</td>
@@ -53,17 +56,17 @@
 </template>
 
 <script>
-import { ref } from "@vue/reactivity";
+import { computed, ref } from "@vue/reactivity";
 import getVariables from "../../../composables/getVariables";
 import Loading from "../../../components/Loading.vue";
+import MajorFilter from "../../../components/MajorFilter.vue";
 import { useRouter } from "vue-router";
 export default {
-  components: { Loading },
+  components: { Loading, MajorFilter },
   setup() {
     const { urlSiswa, cors, retToken } = getVariables();
     const router = useRouter();
     const students = ref([]);
-    let no = 1;
 
     const fetchData = async () => {
       const res = await fetch(`${cors}${urlSiswa}`, {
@@ -74,7 +77,10 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         const data = await res.json();
-        students.value = data;
+        students.value = data.map((std) => {
+          std.name = std.name.toLowerCase();
+          return std;
+        });
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });
@@ -82,6 +88,23 @@ export default {
     };
 
     fetchData();
+
+    const acceptMajorFilter = ref("");
+    const getMajorFilter = (value) => {
+      acceptMajorFilter.value = value;
+    };
+
+    const filteredData = computed(() => {
+      let no = 1;
+      return students.value
+        .filter((std) => {
+          return std.id_jurusan.includes(acceptMajorFilter.value);
+        })
+        .map((std) => {
+          std.no = no++;
+          return std;
+        });
+    });
 
     const deleteData = async (id) => {
       if (confirm("Are You Sure?")) {
@@ -103,8 +126,9 @@ export default {
 
     return {
       students,
-      no,
       deleteData,
+      getMajorFilter,
+      filteredData,
     };
   },
 };
