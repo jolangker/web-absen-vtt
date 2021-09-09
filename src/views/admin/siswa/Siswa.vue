@@ -1,6 +1,6 @@
 <template>
   <div v-if="students.length">
-    <div class="mt-5 flex justify-between">
+    <div class="mt-5 flex justify-between space-x-4">
       <router-link
         :to="{ name: 'Admin.Siswa.Add' }"
         class="btn btn__blue py-1 px-8"
@@ -8,10 +8,9 @@
         <i class="fas fa-user-plus"></i>
         <span class="ml-3">Tambah Siswa</span>
       </router-link>
-      <div class="flex space-x-2">
-        <class-filter @sendClassFilter="getClassFilter" />
-        <major-filter @sendMajorFilter="getMajorFilter" />
-      </div>
+      <search-filter class="flex-grow" @sendSearchFilter="getSearchFilter" />
+      <class-filter @sendClassFilter="getClassFilter" />
+      <major-filter @sendMajorFilter="getMajorFilter" />
     </div>
     <table class="table__layout mt-2">
       <thead class="table__header text-center">
@@ -64,9 +63,10 @@ import getVariables from "../../../composables/getVariables";
 import Loading from "../../../components/Loading.vue";
 import MajorFilter from "../../../components/MajorFilter.vue";
 import ClassFilter from "../../../components/ClassFilter.vue";
+import SearchFilter from "../../../components/SearchFilter.vue";
 import { useRouter } from "vue-router";
 export default {
-  components: { Loading, MajorFilter, ClassFilter },
+  components: { Loading, MajorFilter, ClassFilter, SearchFilter },
   setup() {
     const { urlSiswa, cors, retToken } = getVariables();
     const router = useRouter();
@@ -103,13 +103,19 @@ export default {
       acceptClassFilter.value = value;
     };
 
+    const acceptSearchFilter = ref("");
+    const getSearchFilter = (value) => {
+      acceptSearchFilter.value = value;
+    };
+
     const filteredData = computed(() => {
       let no = 1;
       return students.value
         .filter((std) => {
           return (
             std.id_jurusan.includes(acceptMajorFilter.value) &&
-            std.id_kelas.includes(acceptClassFilter.value)
+            std.id_kelas.includes(acceptClassFilter.value) &&
+            std.name.includes(acceptSearchFilter.value)
           );
         })
         .map((std) => {
@@ -141,6 +147,7 @@ export default {
       deleteData,
       getMajorFilter,
       getClassFilter,
+      getSearchFilter,
       filteredData,
     };
   },
