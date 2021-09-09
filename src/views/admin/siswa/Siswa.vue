@@ -29,13 +29,17 @@
             Tidak Ada Data Yang Tersedia
           </td>
         </tr>
-        <tr class="body__row" v-for="student in filteredData" :key="student">
-          <td class="body__field px-0">{{ student.no }}</td>
-          <td class="body__field px-0">{{ student.nisn }}</td>
-          <td class="body__field px-0">{{ student.name }}</td>
-          <td class="body__field px-0">{{ student.id_kelas }}</td>
-          <td class="body__field px-0">{{ student.id_jurusan }}</td>
-          <td class="body__field px-0 flex justify-center space-x-2">
+        <tr
+          class="body__row text-center"
+          v-for="student in filteredData"
+          :key="student"
+        >
+          <td class="body__field">{{ student.no }}</td>
+          <td class="body__field text-left">{{ student.nisn }}</td>
+          <td class="body__field text-left">{{ student.name }}</td>
+          <td class="body__field">{{ student.id_kelas }}</td>
+          <td class="body__field">{{ student.id_jurusan }}</td>
+          <td class="body__field flex justify-center space-x-2">
             <router-link
               class="btn btn__green"
               :to="{ name: 'Admin.Siswa.Edit', params: { id: student.nisn } }"

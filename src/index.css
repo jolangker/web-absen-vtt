@@ -65,12 +65,12 @@
     @apply bg-blue-500 text-white;
   }
   .header__field {
-    @apply font-semibold py-4 px-6;
+    @apply font-semibold py-4 px-4;
   }
   .body__row {
     @apply hover:bg-gray-200 border-t border-blue-400;
   }
   .body__field {
-    @apply py-3 px-6;
+    @apply py-3 px-4;
   }
 }
