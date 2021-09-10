@@ -42,7 +42,7 @@ export default {
     const searchFilter = ref("");
 
     const sendSearchFilter = (e) => {
-      emit("sendSearchFilter", searchFilter.value);
+      emit("sendSearchFilter", searchFilter.value.toLowerCase());
     };
 
     return {

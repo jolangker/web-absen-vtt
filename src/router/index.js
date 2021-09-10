@@ -59,6 +59,11 @@ const routes = [
         component: () => import("../views/admin/absensi/Absensi.vue"),
       },
       {
+        path: "absensi/histori",
+        name: "Admin.Absensi.Histori",
+        component: () => import("../views/admin/absensi/History.vue"),
+      },
+      {
         path: "absensi/add",
         name: "Admin.Absensi.Add",
         component: () => import("../views/admin/absensi/Add.vue"),

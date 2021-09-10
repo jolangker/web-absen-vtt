@@ -115,7 +115,7 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         alert("Absensi Berhasil Ditambahkan!");
-        router.push({ name: "Admin.Absensi" });
+        router.push({ name: "Admin.Absensi.Histori" });
       } catch (err) {
         alert(err);
       }
