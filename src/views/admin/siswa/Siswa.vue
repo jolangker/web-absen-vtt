@@ -89,6 +89,7 @@ export default {
           std.name = std.name.toLowerCase();
           return std;
         });
+        students.value.splice(0, 1);
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });

@@ -39,10 +39,11 @@
 import { ref } from "@vue/reactivity";
 import getVariables from "../composables/getVariables";
 import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
 
 export default {
   setup() {
-    const { urlAbsensi, cors, retToken } = getVariables();
+    const { urlAbsensi, urlRT, cors, retToken } = getVariables();
     const router = useRouter();
     const nisn = sessionStorage.getItem("nisn");
     const getStudent = ref([]);
@@ -87,7 +88,7 @@ export default {
       if (getStudent.value.length >= 1) {
         alert("Kamu Sudah Absen Hari Ini");
       } else {
-        const res = await fetch(`${cors}${urlAbsensi}`, {
+        const res = await fetch(`${cors}${urlRT}`, {
           method: "POST",
           headers: {
             Authorization: `Bearer ${retToken}`,
@@ -100,6 +101,7 @@ export default {
             checked_out: false,
             daily: daily.value,
             checkin: new Date().toJSON(),
+            checkout: null,
           }),
         });
         try {
@@ -109,7 +111,7 @@ export default {
           router.go(0);
         } catch (err) {
           alert(err);
-          router.push({ name: "Login" });
+          // router.push({ name: "Login" });
         }
       }
     };

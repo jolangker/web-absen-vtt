@@ -67,7 +67,7 @@ import { useRouter } from "vue-router";
 export default {
   components: { BackButton },
   setup() {
-    const { urlSiswa, urlAbsensi, cors, retToken } = getVariables();
+    const { urlSiswa, urlAbsensi, urlRT, cors, retToken } = getVariables();
     const router = useRouter();
     const nisn = ref("");
     const daily = ref("");
@@ -96,7 +96,7 @@ export default {
       const checkin = `${daily.value}T${checkin_input.value}+07:00`;
       const checkout = `${daily.value}T${checkout_input.value}+07:00`;
 
-      const res = await fetch(`${cors}${urlAbsensi}`, {
+      const res = await fetch(`${cors}${urlRT}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
