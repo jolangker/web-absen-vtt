@@ -12,15 +12,18 @@
     "
   >
     <date-time />
-    <absence-button />
+    <attend-button :name="name" />
   </div>
 </template>
 
 <script>
-import DateTime from "../components/DateTime.vue";
-import AbsenceButton from "../components/AbsenceButton.vue";
+import DateTime from "./DateTime.vue";
+import AttendButton from "./AttendButton.vue";
 export default {
-  components: { DateTime, AbsenceButton },
+  components: { DateTime, AttendButton },
+  props: {
+    name: String,
+  },
 };
 </script>
 

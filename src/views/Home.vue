@@ -2,7 +2,7 @@
   <div v-if="Object.keys(student).length">
     <Header :student="student" />
     <main class="px-4 lg:px-16 py-6">
-      <Absence />
+      <Attendance :name="student.name" />
     </main>
   </div>
   <div v-else>
@@ -12,13 +12,13 @@
 
 <script>
 import Header from "../components/Header.vue";
-import Absence from "../components/Absence.vue";
+import Attendance from "../components/Attendance.vue";
 import Loading from "../components/Loading.vue";
 import { useRouter } from "vue-router";
 import { ref } from "@vue/reactivity";
 import getVariables from "../composables/getVariables";
 export default {
-  components: { Header, Absence, Loading },
+  components: { Header, Attendance, Loading },
   setup() {
     const nisn = sessionStorage.getItem("nisn");
     const router = useRouter();

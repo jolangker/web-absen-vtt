@@ -11,7 +11,7 @@ export default {
 <style>
 ::-webkit-scrollbar {
   width: 8px;
-  /* height: 16px; */
+  height: 8px;
 }
 
 /* Track */

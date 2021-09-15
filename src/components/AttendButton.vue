@@ -40,16 +40,30 @@ import { ref } from "@vue/reactivity";
 import getVariables from "../composables/getVariables";
 import { useRouter } from "vue-router";
 import { onMounted } from "@vue/runtime-core";
+import Pusher from "pusher-js";
 
 export default {
-  setup() {
+  props: {
+    name: String,
+  },
+  setup(props) {
     const { urlAbsensi, urlRT, cors, retToken } = getVariables();
     const router = useRouter();
     const nisn = sessionStorage.getItem("nisn");
     const getStudent = ref([]);
     const id = ref(0);
+    const name = ref("");
     const status = ref(false);
     const daily = ref("");
+
+    onMounted(() => {
+      const pusher = new Pusher("9c4a66de751481d7442a", {
+        cluster: "ap1",
+      });
+
+      const channel = pusher.subscribe("absenvttv3");
+      channel.bind("absen", fetchData);
+    });
 
     const getDaily = () => {
       const date = new Date();
@@ -79,6 +93,7 @@ export default {
         );
       });
       id.value = getStudent.value[0]?.id;
+      name.value = getStudent.value[0]?.name;
       status.value = getStudent.value[0]?.checked_in;
     };
 
@@ -96,6 +111,7 @@ export default {
           },
           body: JSON.stringify({
             id_absensi: nisn,
+            name: props.name,
             status: true,
             checked_in: true,
             checked_out: false,
@@ -108,10 +124,9 @@ export default {
           if (!res.ok) throw res.statusText;
           status.value = true;
           alert("Check In Berhasil");
-          router.go(0);
         } catch (err) {
           alert(err);
-          // router.push({ name: "Login" });
+          router.push({ name: "Login" });
         }
       }
     };

@@ -34,9 +34,9 @@
   </div>
   <table class="mt-1 table__layout">
     <thead class="table__header">
-      <tr>
+      <tr class="text-center">
         <td class="header__field">No</td>
-        <td class="header__field">NISN</td>
+        <td class="header__field">Nama Siswa</td>
         <td class="header__field">Check In</td>
         <td class="header__field">Check Out</td>
         <td class="header__field text-center w-80">Aksi</td>
@@ -48,9 +48,14 @@
           Tidak Ada Absensi
         </td>
       </tr>
-      <tr v-else class="body__row" v-for="attd in attds" :key="attd">
+      <tr
+        v-else
+        class="body__row text-center"
+        v-for="attd in attds"
+        :key="attd"
+      >
         <td class="body__field">{{ attd.no }}</td>
-        <td class="body__field">{{ attd.id_absensi }}</td>
+        <td class="body__field text-left">{{ attd.name }}</td>
         <td class="body__field">
           {{ new Date(attd.checkin).toLocaleTimeString() }}
         </td>
@@ -91,6 +96,8 @@ import getDaily from "../../../composables/getDaily";
 import Loading from "../../../components/Loading.vue";
 import AttendanceNow from "../../../components/AttendanceNow.vue";
 import { useRouter } from "vue-router";
+import Pusher from "pusher-js";
+import { onMounted } from "@vue/runtime-core";
 export default {
   components: { Loading, AttendanceNow },
   setup() {
@@ -101,6 +108,15 @@ export default {
     const students = ref([]);
     const attds = ref([]);
     const displayDate = ref("");
+
+    onMounted(() => {
+      const pusher = new Pusher("9c4a66de751481d7442a", {
+        cluster: "ap1",
+      });
+
+      const channel = pusher.subscribe("absenvttv3");
+      channel.bind("absen", fetchDaily);
+    });
 
     const fetchDaily = async () => {
       let no = 1;
@@ -176,6 +192,7 @@ export default {
           router.go(0);
         } catch (err) {
           alert(err);
+          router.push({ name: "Admin.Login" });
         }
       }
     };

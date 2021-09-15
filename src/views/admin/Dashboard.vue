@@ -41,8 +41,6 @@ export default {
     const daily = ref("");
 
     onMounted(() => {
-      Pusher.logToConsole = true;
-
       const pusher = new Pusher("9c4a66de751481d7442a", {
         cluster: "ap1",
       });

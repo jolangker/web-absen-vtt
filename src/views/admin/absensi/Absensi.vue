@@ -6,14 +6,14 @@
       class="btn btn__blue px-8"
     >
       <i class="fas fa-calendar-alt"></i>
-      <span class="ml-3">Liat Histori Absensi</span>
+      <span class="ml-3">Lihat Histori Absensi</span>
     </router-link>
   </div>
   <table class="table__layout mt-1">
     <thead class="table__header">
       <tr class="header__row text-center">
         <td class="header__field py-2 px-6">No</td>
-        <td class="header__field py-2 px-6">NISN</td>
+        <td class="header__field py-2 px-6">Nama Siswa</td>
         <td class="header__field py-2 px-6">Waktu Absen</td>
         <td class="header__field py-2 px-6">Sudah Absen</td>
       </tr>
@@ -30,7 +30,7 @@
         :key="student"
       >
         <td class="body__field">{{ student.no }}</td>
-        <td class="body__field">{{ student.id_absensi }}</td>
+        <td class="body__field text-left">{{ student.name }}</td>
         <td class="body__field">
           {{ new Date(student.checkin).toLocaleTimeString() }}
         </td>
@@ -47,12 +47,23 @@ import { ref } from "@vue/reactivity";
 import getDaily from "../../../composables/getDaily";
 import getVariables from "../../../composables/getVariables";
 import { useRouter } from "vue-router";
+import { onMounted } from "@vue/runtime-core";
+import Pusher from "pusher-js";
 export default {
   setup() {
     const { daily } = getDaily();
     const { urlDaily, cors, retToken } = getVariables();
     const students = ref([]);
     const router = useRouter();
+
+    onMounted(() => {
+      const pusher = new Pusher("9c4a66de751481d7442a", {
+        cluster: "ap1",
+      });
+
+      const channel = pusher.subscribe("absenvttv3");
+      channel.bind("absen", fetchData);
+    });
 
     const fetchData = async () => {
       let no = 1;

@@ -3,18 +3,18 @@
     <h2 class="crud__header">TAMBAH CUSTOM ABSENSI</h2>
     <form class="crud" @submit.prevent="addData">
       <div>
-        <label for="nisn" class="crud__label">NISN</label>
+        <label for="student" class="crud__label">SISWA</label>
         <select
-          id="nisn"
+          id="student"
           class="crud__form appearance-none cursor-pointer"
-          v-model="nisn"
+          v-model="student"
           required
         >
           <option value="" selected disabled>Pilih Siswa</option>
           <option
             v-for="student in students"
             :key="student"
-            :value="student.nisn"
+            :value="[student.nisn, student.name]"
           >
             {{ student.name }}
           </option>
@@ -47,7 +47,6 @@
           type="time"
           class="crud__form"
           v-model="checkout_input"
-          required
         />
       </div>
       <button type="submit" class="btn btn__green py-2 px-6">
@@ -67,9 +66,9 @@ import { useRouter } from "vue-router";
 export default {
   components: { BackButton },
   setup() {
-    const { urlSiswa, urlAbsensi, urlRT, cors, retToken } = getVariables();
+    const { urlSiswa, urlRT, cors, retToken } = getVariables();
     const router = useRouter();
-    const nisn = ref("");
+    const student = ref("");
     const daily = ref("");
     const checkin_input = ref("");
     const checkout_input = ref("");
@@ -84,6 +83,7 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         students.value = await res.json();
+        students.value.splice(0, 1);
       } catch (err) {
         alert(err);
         router.push({ name: "Admin.Login" });
@@ -103,7 +103,8 @@ export default {
           Authorization: `Bearer ${retToken}`,
         },
         body: JSON.stringify({
-          id_absensi: nisn.value,
+          id_absensi: student.value[0],
+          name: student.value[1],
           daily: daily.value,
           status: true,
           checkin: checkin,
@@ -112,6 +113,7 @@ export default {
           checked_out: checkout ? true : false,
         }),
       });
+      console.log(await res.json());
       try {
         if (!res.ok) throw res.statusText;
         alert("Absensi Berhasil Ditambahkan!");
@@ -122,7 +124,7 @@ export default {
     };
 
     return {
-      nisn,
+      student,
       daily,
       checkin_input,
       checkout_input,

@@ -12,6 +12,7 @@
       rounded
       duration-300
       hover:bg-gray-300
+      cursor-pointer
     "
   >
     <h2 class="text-2xl font-medium">

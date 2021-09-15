@@ -1,24 +1,14 @@
 <template>
   <div class="crud__wrapper">
-    <h2 class="crud__header">EDIT {{ nisn }} ABSENSI</h2>
+    <h2 class="crud__header">EDIT {{ name.toUpperCase() }} ABSENSI</h2>
     <form class="crud" @submit.prevent="updateData">
       <div>
-        <label for="id_attd" class="crud__label">ID ABSENSI</label>
+        <label for="name_attd" class="crud__label">SISWA</label>
         <input
-          type="number"
-          id="id_attd"
-          class="crud__form"
-          v-model="id"
-          readonly
-        />
-      </div>
-      <div>
-        <label for="nisn_attd" class="crud__label">NISN</label>
-        <input
-          type="number"
+          type="text"
           id="nisn_attd"
           class="crud__form"
-          v-model="nisn"
+          v-model="name"
           readonly
         />
       </div>
@@ -71,7 +61,7 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const id = route.params.id;
-    const nisn = ref("");
+    const name = ref("");
     const daily = ref("");
     const checkin_input = ref("");
     const checkout_input = ref("");
@@ -99,7 +89,7 @@ export default {
         const data = await res.json();
         data.checkin = getTime(data.checkin);
         data.checkout = data.checkout ? getTime(data.checkout) : null;
-        nisn.value = data.id_absensi;
+        name.value = data.name;
         daily.value = data.daily;
         checkin_input.value = data.checkin;
         checkout_input.value = data.checkout;
@@ -138,8 +128,7 @@ export default {
     };
 
     return {
-      id,
-      nisn,
+      name,
       daily,
       checkin_input,
       checkout_input,

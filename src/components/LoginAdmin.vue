@@ -4,7 +4,7 @@
       <h2 class="text-2xl text-white font-medium">ADMIN</h2>
     </div>
     <div class="py-8 px-6 bg-white">
-      <form class="flex flex-col" @submit.prevent="login">
+      <form class="flex flex-col" @submit.prevent="login" autocomplete="off">
         <input
           id="username"
           type="text"

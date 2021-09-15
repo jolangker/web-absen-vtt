@@ -35,7 +35,7 @@
           :key="student"
         >
           <td class="body__field">{{ student.no }}</td>
-          <td class="body__field text-left">{{ student.nisn }}</td>
+          <td class="body__field">{{ student.nisn }}</td>
           <td class="body__field text-left">{{ student.name }}</td>
           <td class="body__field">{{ student.id_kelas }}</td>
           <td class="body__field">{{ student.id_jurusan }}</td>
