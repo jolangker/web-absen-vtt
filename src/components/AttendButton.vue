@@ -43,10 +43,11 @@ import { onMounted } from "@vue/runtime-core";
 import Pusher from "pusher-js";
 
 export default {
+  emits: ["SuccessAction", "WarningAction", "ErrorAction"],
   props: {
     name: String,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const { urlAbsensi, urlRT, cors, retToken } = getVariables();
     const router = useRouter();
     const nisn = sessionStorage.getItem("nisn");
@@ -101,7 +102,7 @@ export default {
 
     const checkIn = async () => {
       if (getStudent.value.length >= 1) {
-        alert("Kamu Sudah Absen Hari Ini");
+        emit("WarningAction", "Kamu Sudah Absen Hari Ini!");
       } else {
         const res = await fetch(`${cors}${urlRT}`, {
           method: "POST",
@@ -123,13 +124,13 @@ export default {
         try {
           if (!res.ok) throw res.statusText;
           status.value = true;
-          alert("Check In Berhasil");
+          emit("SuccessAction", "Check In Berhasil!");
         } catch (err) {
-          alert(err);
-          router.push({ name: "Login" });
+          emit("ErrorAction", "Absen Gagal! Harap Login Kembali.");
         }
       }
     };
+
     const checkOut = async () => {
       const res = await fetch(`${cors}${urlAbsensi}${id.value}/`, {
         method: "PATCH",
@@ -147,10 +148,9 @@ export default {
       try {
         if (!res.ok) throw res.statusText;
         status.value = false;
-        alert("Check Out Berhasil");
+        emit("SuccessAction", "Check Out Berhasil!");
       } catch (err) {
-        alert(err);
-        router.push({ name: "Login" });
+        emit("ErrorAction", "Absen Gagal! Harap Login Kembali.");
       }
     };
 

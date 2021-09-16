@@ -73,4 +73,16 @@
   .body__field {
     @apply py-3 px-4;
   }
+  .alert {
+    @apply absolute top-0 right-0 px-4 py-3 border-l-8 rounded-sm min-w-min font-medium flex items-center shadow;
+  }
+  .alert__success {
+    @apply bg-green-100 border-green-500 text-green-600;
+  }
+  .alert__warning {
+    @apply bg-yellow-100 border-yellow-500 text-yellow-600;
+  }
+  .alert__error {
+    @apply bg-red-100 border-red-500 text-red-600;
+  }
 }
